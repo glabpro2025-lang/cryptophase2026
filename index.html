@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bảng Pha Weinstein — Crypto Top 500</title>
+<style>
+:root{color-scheme:light dark}
+:root{
+  --bg:#EFF3F1; --surface:#FFFFFF; --surface-2:#F7FAF8;
+  --ink:#111A17; --ink-2:#3C4B46; --muted:#66756F; --line:#D9E1DD; --line-2:#E9EFEC;
+  --s1:#8A6E12; --s1-bg:#F5EDD4; --s1-ink:#6B5407;
+  --s2:#12694E; --s2-bg:#D7EDE3; --s2-ink:#0C5540;
+  --s3:#B25A20; --s3-bg:#F8E5D5; --s3-ink:#8E4514;
+  --s4:#9C3535; --s4-bg:#F7DCDA; --s4-ink:#7C2727;
+  --accent:#12694E; --btn-ink:#FFFFFF;
+  --shadow:0 1px 2px rgba(17,26,23,.05), 0 8px 24px -12px rgba(17,26,23,.18);
+  --r:10px;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"Archivo",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0B120F; --surface:#131C19; --surface-2:#18231F;
+    --ink:#E3EBE7; --ink-2:#B4C2BC; --muted:#84948E; --line:#25322D; --line-2:#1E2A26;
+    --s1:#D9B33F; --s1-bg:#2E2810; --s1-ink:#E6C556;
+    --s2:#43C793; --s2-bg:#0F2C22; --s2-ink:#5BD9A6;
+    --s3:#E08A4C; --s3-bg:#33210F; --s3-ink:#EE9C5F;
+    --s4:#E06A63; --s4-bg:#331715; --s4-ink:#EE7F78;
+    --accent:#43C793; --btn-ink:#07130F;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0B120F; --surface:#131C19; --surface-2:#18231F;
+  --ink:#E3EBE7; --ink-2:#B4C2BC; --muted:#84948E; --line:#25322D; --line-2:#1E2A26;
+  --s1:#D9B33F; --s1-bg:#2E2810; --s1-ink:#E6C556;
+  --s2:#43C793; --s2-bg:#0F2C22; --s2-ink:#5BD9A6;
+  --s3:#E08A4C; --s3-bg:#33210F; --s3-ink:#EE9C5F;
+  --s4:#E06A63; --s4-bg:#331715; --s4-ink:#EE7F78;
+  --accent:#43C793; --btn-ink:#07130F;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%}[hidden]{display:none!important}
+.wrap{max-width:1180px;margin:0 auto;padding:22px 20px 64px}
+h1,h2,h3{margin:0;text-wrap:balance}
+.eyebrow{font-size:11px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.sec-head{margin:32px 0 14px}
+.sec-head h2{font-size:19px;font-weight:700;letter-spacing:-.01em}
+.sec-head p{margin:5px 0 0;color:var(--muted);font-size:13.5px;max-width:78ch}
+header.top{display:flex;flex-wrap:wrap;gap:14px;align-items:flex-end;justify-content:space-between;
+  padding-bottom:16px;border-bottom:1px solid var(--line);margin-bottom:22px}
+.brand h1{font-size:25px;font-weight:700;letter-spacing:-.015em}
+.brand p{margin:3px 0 0;color:var(--muted);font-size:13px}
+.loadbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+button{font-family:var(--sans);font-size:13px;font-weight:600;cursor:pointer;
+  border:1px solid var(--line);background:var(--surface);color:var(--ink);
+  padding:7px 13px;border-radius:8px;transition:border-color .15s}
+button:hover{border-color:var(--accent)}
+button:disabled{opacity:.55;cursor:default}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn-solid{background:var(--accent);border-color:var(--accent);color:var(--btn-ink)}
+.banner{margin:0 0 16px;padding:10px 14px;border-radius:8px;background:var(--s3-bg);
+  border:1px solid var(--s3);color:var(--s3-ink);font-size:13px;line-height:1.5}
+.cycle{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  padding:18px;box-shadow:var(--shadow)}
+.cycle-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:13px;flex-wrap:wrap}
+.band{display:flex;height:34px;border-radius:6px;overflow:hidden;border:1px solid var(--line)}
+.band button{border:0;border-radius:0;padding:0;display:flex;align-items:center;justify-content:center;
+  color:#fff;font-family:var(--mono);font-size:12px;font-weight:600;min-width:0;transition:filter .15s}
+.band button:hover{filter:brightness(1.12)}
+.band button.dim{opacity:.34}
+.stages{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+table.santab{width:100%;border-collapse:collapse;font-size:12.8px;margin-top:14px}
+table.santab th{font-size:10.5px;font-weight:600;letter-spacing:.055em;text-transform:uppercase;
+  color:var(--muted);text-align:right;padding:7px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+table.santab th.l,table.santab td.l{text-align:left}
+table.santab td{padding:6px 10px;text-align:right;border-bottom:1px solid var(--line-2);
+  font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+table.santab tbody tr:last-child td{border-bottom:0}
+.sbar{display:flex;height:8px;width:100%;border-radius:4px;overflow:hidden;background:var(--line-2)}
+.sbar i{display:block;height:100%}
+.st{border:1px solid var(--line-2);border-radius:8px;padding:11px 12px;background:var(--surface-2);
+  border-left:3px solid var(--sc)}
+.st .lab{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--sc)}
+.st .big{font-family:var(--mono);font-size:26px;font-weight:600;line-height:1.15;margin-top:3px}
+.st .sub{font-size:12px;color:var(--muted);margin-top:1px}
+.st .sub b{font-weight:600;color:var(--ink-2)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:880px){.grid2{grid-template-columns:1fr}.stages{grid-template-columns:repeat(2,1fr)}}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+.panel > h2{font-size:13px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;
+  padding:12px 16px;border-bottom:1px solid var(--line-2);display:flex;justify-content:space-between;align-items:center;gap:8px}
+.row{display:flex;align-items:center;gap:10px;padding:9px 16px;border-bottom:1px solid var(--line-2);flex-wrap:wrap}
+.row:last-child{border-bottom:0}
+.row .tk{font-family:var(--mono);font-weight:600;font-size:14px;min-width:46px}
+.row .meta{margin-left:auto;display:flex;gap:12px;font-family:var(--mono);font-size:12px;color:var(--muted)}
+.row .meta b{font-weight:500;color:var(--ink-2)}
+.chip{font-family:var(--mono);font-size:11px;font-weight:600;padding:2px 7px;border-radius:5px;white-space:nowrap}
+.chip.buy3{background:var(--s2);color:#fff}
+.chip.buy2{background:var(--s2-bg);color:var(--s2-ink);border:1px solid var(--s2)}
+.chip.buy1{background:var(--s2-bg);color:var(--s2-ink)}
+.chip.sell2{background:var(--s4);color:#fff}
+.chip.sell1{background:var(--s3-bg);color:var(--s3-ink);border:1px solid var(--s3)}
+.chip.warn{background:var(--s3-bg);color:var(--s3-ink)}
+.chip.arrow{background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2)}
+.chip.p1{background:var(--s1-bg);color:var(--s1-ink);border:1px solid var(--s1)}
+.chip.p2{background:var(--s2-bg);color:var(--s2-ink);border:1px solid var(--s2)}
+.chip.p3{background:var(--s3-bg);color:var(--s3-ink);border:1px solid var(--s3)}
+.chip.p4{background:var(--s4-bg);color:var(--s4-ink);border:1px solid var(--s4)}
+.empty{padding:20px 16px;color:var(--muted);font-size:13px}
+.dd{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);overflow:hidden;margin-bottom:16px}
+.dd-head{display:flex;align-items:center;gap:10px;padding:13px 18px;border-bottom:1px solid var(--line-2);
+  flex-wrap:wrap;border-left:4px solid var(--sc)}
+.dd-head .tk{font-family:var(--mono);font-size:21px;font-weight:600;letter-spacing:-.01em}
+.dd-head .px{font-family:var(--mono);font-size:15px;color:var(--muted);margin-left:auto}
+.dd-head .tag{font-size:12.5px;color:var(--muted)}
+.flag{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;
+  padding:3px 9px;border-radius:5px;background:var(--fb);color:var(--fc);border:1px solid var(--fc)}
+.dd-body{display:grid;grid-template-columns:1.15fr .85fr}
+@media (max-width:900px){.dd-body{grid-template-columns:1fr}}
+.dd-left{padding:15px 18px 17px;border-right:1px solid var(--line-2)}
+@media (max-width:900px){.dd-left{border-right:0;border-bottom:1px solid var(--line-2)}}
+.dd-right{padding:15px 18px 17px;background:var(--surface-2)}
+.dd p{margin:0 0 10px;font-size:13.8px;color:var(--ink-2)}
+.dd p b{color:var(--ink);font-weight:600}
+.dd p .n{font-family:var(--mono);font-weight:500}
+.cond{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:4px}
+.cond li{font-size:13px;display:flex;gap:8px;align-items:baseline;color:var(--ink-2)}
+.cond .mk{font-family:var(--mono);font-weight:600;width:14px;flex:none;text-align:center}
+.cond .ok{color:var(--s2-ink)}.cond .no{color:var(--s4-ink)}
+.cond .v{margin-left:auto;font-family:var(--mono);font-size:12.5px;font-variant-numeric:tabular-nums}
+.mtab{width:100%;border-collapse:collapse;font-size:12.8px;margin:2px 0 12px}
+.mtab td{padding:5px 0;border-bottom:1px solid var(--line-2)}
+.mtab td:last-child{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:500}
+.mtab tr:last-child td{border-bottom:0}
+.mtab .hi td{font-weight:600;color:var(--ink)}
+svg.proj{display:block;width:100%;height:auto;margin-bottom:8px}
+.kv{display:grid;grid-template-columns:auto auto;gap:4px 12px;font-size:12.8px}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0;font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right}
+.verdict{margin-top:12px;padding:9px 11px;border-radius:7px;font-size:13px;line-height:1.5;
+  background:var(--vb);border-left:3px solid var(--vc);color:var(--ink-2)}
+.verdict b{color:var(--ink)}
+.wl{display:grid;grid-template-columns:repeat(auto-fill,minmax(224px,1fr));gap:10px;padding:14px 16px}
+.card{border:1px solid var(--line-2);border-radius:8px;padding:11px 12px;background:var(--surface-2)}
+.card .r1{display:flex;align-items:baseline;gap:8px}
+.card .tk{font-family:var(--mono);font-weight:600;font-size:15px}
+.card .px{font-family:var(--mono);font-size:13px;color:var(--muted);margin-left:auto}
+.dots{display:flex;gap:3px;margin:8px 0 6px}
+.dot{height:5px;flex:1;border-radius:3px;background:var(--line)}
+.dot.on{background:var(--s2)}
+.card .cond2{font-size:11.5px;color:var(--muted);line-height:1.45}
+.card .cond2 b{color:var(--ink-2);font-weight:500;font-family:var(--mono)}
+.tablewrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);overflow:hidden}
+.tbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:12px 16px;border-bottom:1px solid var(--line-2)}
+input[type=search],select{font-family:var(--sans);font-size:13px;padding:6px 10px;border-radius:7px;
+  border:1px solid var(--line);background:var(--surface-2);color:var(--ink)}
+.scroll{overflow-x:auto;max-height:520px}
+table.big{border-collapse:collapse;width:100%;font-size:13px}
+table.big th{font-size:10.5px;font-weight:600;letter-spacing:.055em;text-transform:uppercase;color:var(--muted);
+  text-align:right;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap;
+  cursor:pointer;user-select:none;position:sticky;top:0;background:var(--surface);z-index:1}
+table.big th:first-child,table.big th.l{text-align:left}
+table.big th:hover{color:var(--accent)}
+table.big th.sorted::after{content:"▾";margin-left:4px;display:inline-block}
+table.big th.sorted.asc::after{transform:rotate(180deg)}
+table.big td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--line-2);white-space:nowrap;
+  font-family:var(--mono);font-variant-numeric:tabular-nums}
+table.big td.l{text-align:left}
+table.big tbody tr:hover{background:var(--surface-2)}
+.stcell{display:inline-flex;align-items:center;gap:6px;font-weight:600}
+.stcell i{width:3px;height:15px;border-radius:2px;background:var(--sc);display:inline-block}
+.pos{color:var(--s2-ink)}.neg{color:var(--s4-ink)}
+.foot{padding:11px 16px;font-size:12px;color:var(--muted);border-top:1px solid var(--line-2);
+  display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.legend{margin-top:18px;padding:16px 18px;border:1px solid var(--line);border-radius:var(--r);
+  background:var(--surface);font-size:13.5px;color:var(--ink-2);box-shadow:var(--shadow)}
+.legend h3{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+.legend ul{margin:0;padding-left:17px;display:grid;gap:6px}
+.legend code{font-family:var(--mono);font-size:12px;background:var(--surface-2);padding:1px 5px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+/* ═══ PRO: macro chips ═══ */
+.macro{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 2px}
+.mchip{display:inline-flex;align-items:center;gap:7px;background:var(--surface);border:1px solid var(--line);
+  border-radius:99px;padding:4px 12px;font-size:12px;font-weight:600;color:var(--ink)}
+.mchip small{color:var(--muted);font-weight:500}
+.mdot{width:9px;height:9px;border-radius:99px;background:var(--muted);flex:none}
+/* ═══ PRO: breadth section ═══ */
+.breadth{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 18px;margin:18px 0}
+.breadth h2{font-size:14px;margin-bottom:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.tile{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;position:relative;overflow:hidden}
+.tile .tl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.tile .tv{font-size:26px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.tile .ts{font-size:11.5px;color:var(--muted);margin-top:3px}
+.tile.hot{border-color:var(--s2);box-shadow:0 0 0 1px var(--s2),0 6px 22px -10px var(--s2)}
+.tile.cold{border-color:var(--s4);box-shadow:0 0 0 1px var(--s4),0 6px 22px -10px var(--s4)}
+.pbar{height:7px;border-radius:99px;background:var(--line);margin-top:8px;overflow:hidden;display:flex}
+.pbar i{display:block;height:100%}
+.badge{display:inline-flex;align-items:center;gap:6px;border-radius:8px;padding:3px 10px;font-size:11.5px;font-weight:700;letter-spacing:.03em}
+.badge.thrust{background:var(--s2-bg);color:var(--s2);animation:pulse 1.6s ease-in-out infinite}
+.badge.diverge{background:var(--s3-bg);color:var(--s3)}
+.badge.fear{background:var(--s4-bg);color:var(--s4)}
+.badge.greed{background:var(--s3-bg);color:var(--s3)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.55}}
+.spark{width:100%;height:46px;display:block;margin-top:6px}
+.spark path{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+/* ═══ PRO: backtest ═══ */
+.bt{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:14px}
+.bt .tile .tv{font-size:22px}
+.bt table{width:100%;font-size:12.5px}
+.bt th{padding:6px 8px}
+.bt td{padding:6px 8px;font-variant-numeric:tabular-nums}
+/* ═══ PRO: cell highlights ═══ */
+.glow2{position:relative}
+.glow2::after{content:"";position:absolute;inset:-2px -6px;border-radius:8px;border:1.5px solid var(--s2);
+  box-shadow:0 0 10px -2px var(--s2);pointer-events:none;animation:pulse 2.2s ease-in-out infinite}
+.ud-hi{color:var(--s2);font-weight:700}
+.ud-lo{color:var(--s4);font-weight:700}
+.fund-hi{color:var(--s4);font-weight:700}
+.fund-lo{color:var(--s2)}
+.rstop{color:var(--s2);font-weight:700}
+.sup-lo{color:var(--s3);font-weight:600}
+/* ═══ PRO: deep-dive dạng slide có số thứ tự ═══ */
+.ddtabs{display:flex;gap:8px;align-items:center;margin-bottom:14px;flex-wrap:wrap}
+.ddtab{display:inline-flex;align-items:center;gap:8px;padding:5px 13px 5px 5px;border-radius:99px;
+  border:1px solid var(--line);background:var(--surface);cursor:pointer;font-family:inherit;
+  font-size:13px;font-weight:600;color:var(--ink-2);transition:border-color .15s,box-shadow .15s}
+.ddtab:hover{border-color:var(--sc)}
+.ddtab .no{width:22px;height:22px;border-radius:99px;background:var(--line-2);color:var(--muted);
+  display:grid;place-items:center;font-size:11.5px;font-weight:700;font-family:var(--mono)}
+.ddtab .dot{width:8px;height:8px;border-radius:99px;background:var(--sc);flex:none}
+.ddtab .stg{font-family:var(--mono);font-size:11px;color:var(--muted);font-weight:500}
+.ddtab.on{border-color:var(--sc);box-shadow:0 0 0 1px var(--sc);color:var(--ink)}
+.ddtab.on .no{background:var(--sc);color:var(--bg)}
+.ddnav{margin-left:auto;display:inline-flex;align-items:center;gap:9px;color:var(--muted);font-size:12.5px;font-family:var(--mono)}
+.ddnav button{width:28px;height:28px;border-radius:99px;border:1px solid var(--line);background:var(--surface);
+  color:var(--ink-2);cursor:pointer;font-size:13px;line-height:1;display:grid;place-items:center}
+.ddnav button:hover{border-color:var(--accent);color:var(--accent)}
+#deepDive .dd{animation:ddfade .2s ease}
+@keyframes ddfade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+/* ═══ PRO: picks ═══ */
+.pick2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:900px){.pick2{grid-template-columns:1fr}}
+.pickcol h3{font-size:13.5px;margin:0 0 8px;color:var(--ink)}
+.prow{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;cursor:pointer;border:1px solid transparent}
+.prow:hover{background:var(--surface-2);border-color:var(--line)}
+.ptk{font-family:var(--mono);font-weight:700;width:62px;flex:none;font-size:13px}
+.pscore{width:64px;height:6px;border-radius:99px;background:var(--line-2);overflow:hidden;flex:none}
+.pscore i{display:block;height:100%}
+.pwhy{font-size:12px;color:var(--ink-2);flex:1;min-width:0;line-height:1.45}
+.pmeta{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:right;flex:none;display:flex;flex-direction:column;line-height:1.4}
+.pnote{font-size:11.5px;color:var(--muted);margin-top:8px;padding:0 10px;line-height:1.5}
+/* ═══ PRO: tín hiệu BUY/SELL T-n + nhịp 5 ngày ═══ */
+.sig{font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.02em;
+  padding:2px 7px;border-radius:5px;white-space:nowrap}
+.sig.buy{background:var(--s2-bg);color:var(--s2-ink);border:1px solid var(--s2)}
+.sig.sell{background:var(--s4-bg);color:var(--s4-ink);border:1px solid var(--s4)}
+.flash5{color:var(--s2-ink);animation:pulse5 1.6s ease infinite}
+@keyframes pulse5{0%,100%{opacity:1}50%{opacity:.35}}
+/* ═══ PRO: flow section ═══ */
+.story{display:flex;flex-direction:column;gap:8px}
+.story p{margin:0;font-size:14.5px;line-height:1.65;color:var(--ink-2);background:var(--surface-2);
+  border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:9px 14px}
+.story p b{color:var(--ink)}
+table.flow td{font-variant-numeric:tabular-nums;white-space:nowrap}
+tr.hot td{background:var(--s2-bg)}
+tr.cold td{background:var(--s4-bg)}
+.dv{position:relative;display:inline-block;width:120px;height:10px;background:var(--line-2);border-radius:3px;vertical-align:middle}
+.dv b{position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--muted);opacity:.5}
+.dv i{position:absolute;top:0;bottom:0;border-radius:3px}
+.shr{display:inline-block;width:70px;height:8px;background:var(--line-2);border-radius:3px;overflow:hidden;vertical-align:middle}
+.shr i{display:block;height:100%;background:var(--accent);opacity:.75}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <h1>Bảng Pha Weinstein — Crypto Top 500 <span style="font-size:12px;vertical-align:middle;background:var(--s2-bg);color:var(--s2);border-radius:6px;padding:2px 8px;font-weight:700;letter-spacing:.04em">PRO</span></h1>
+      <p id="meta">Đang nạp danh mục…</p>
+    </div>
+    <div class="loadbar">
+      <button id="refreshBtn" class="btn-solid">Làm mới dữ liệu</button>
+      <button id="exportBtn">Xuất CSV</button>
+      <button id="themeBtn">Nền sáng / tối</button>
+    </div>
+  </header>
+
+  <div id="banner" class="banner" hidden></div>
+
+  <div class="macro" id="macro"></div>
+
+  <section class="breadth" id="flowSec">
+    <h2>Dòng tiền — vừa vào là phải đọc được chuyện gì đang xảy ra</h2>
+    <div id="flowStory"></div>
+    <div id="flowTable" style="margin-top:12px"></div>
+  </section>
+
+  <section class="breadth" id="pickSec">
+    <h2>Chuyện gì đang xảy ra — hôm nay nên soi coin nào</h2>
+    <div class="pick2" id="picks"></div>
+  </section>
+
+  <section class="cycle">
+    <div class="cycle-head">
+      <div>
+        <div class="eyebrow">Nhịp thị trường</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:2px">
+          Bốn đoạn xếp theo thứ tự chu kỳ 1→2→3→4, không theo số lượng. Bấm một đoạn để lọc bên dưới.<br>
+          Danh mục: <b>Top 500 vốn hoá</b> tự nạp từ CoinGecko (loại stablecoin, wrapped/staked, token quỹ RWA, trùng mã).
+          Nến 1D lấy từ <b>Binance → Gate.io → KuCoin → MEXC → OKX → Bybit</b>; coin nào cả sáu sàn đều không có cặp USDT sẽ được lấy nến ngày từ CoinGecko ở chế độ nền (chạy sau khi bảng đã hiện, thêm dần từng nhóm coin).
+          Phủ gần trọn ~430 coin giao dịch được trong Top 500 — phần còn lại là stablecoin/quỹ token hoá bị loại chủ đích và coin mới dưới 6 tháng chưa đủ cửa sổ MA150.
+          Bộ lọc thanh khoản mặc định loại coin có khối lượng 24h dưới $1M.
+        </div>
+      </div>
+      <div class="num" id="breadth" style="font-size:13px;color:var(--muted)"></div>
+    </div>
+    <div class="band" id="band"></div>
+    <div class="stages" id="stages"></div>
+    <div id="secTab"></div>
+  </section>
+
+  <section class="breadth" id="breadthSec">
+    <h2>Độ rộng thị trường — nền cho mọi tín hiệu mua</h2>
+    <div class="tiles" id="breadthTiles"></div>
+  </section>
+
+  <div class="sec-head">
+    <h2>Cơ học MA dài — sáu đồng chủ chốt</h2>
+    <p>Mỗi đồng một thẻ, chuyển bằng số thứ tự hoặc ◀ ▶ (dấu chấm nhỏ = màu pha hiện tại). Với coin Pha 1, điều kiện duy nhất còn thiếu thường là <b>MA dài phải dốc lên ≥ 1%/20 ngày</b>. Với coin đã ở Pha 2, câu hỏi ngược lại: <b>giá phải rơi tới đâu thì MA dài mới hết dốc</b>. Cả hai không do giá hôm nay quyết định, mà do chênh lệch giữa giá hiện tại và <b>vùng giá sắp rơi khỏi cửa sổ 150 ngày</b>. Đường trong biểu đồ là MA dài dự phóng nếu giá đứng yên ở mức hiện tại. Phần chữ ở đây do máy tự sinh từ số liệu live, không phải nhận định viết tay.</p>
+  </div>
+  <div id="deepDive"></div>
+
+  <div class="sec-head"><h2>Tín hiệu hôm nay</h2></div>
+  <div class="grid2">
+    <section class="panel">
+      <h2>Tín hiệu mua <span class="num" id="cBuy" style="color:var(--muted)"></span></h2>
+      <div id="buys"></div>
+    </section>
+    <section class="panel">
+      <h2>Tín hiệu ra <span class="num" id="cSell" style="color:var(--muted)"></span></h2>
+      <div id="sells"></div>
+    </section>
+  </div>
+
+  <div class="grid2" style="margin-top:16px">
+    <section class="panel">
+      <h2>Vừa đổi pha hôm nay <span class="num" id="cShift" style="color:var(--muted)"></span></h2>
+      <div id="shifts"></div>
+    </section>
+    <section class="panel">
+      <h2>Sắp đủ điều kiện Pha 2 <span class="num" id="cWatch" style="color:var(--muted)"></span></h2>
+      <div class="wl" id="watch"></div>
+    </section>
+  </div>
+
+  <div class="sec-head">
+    <h2>Kiểm chứng chiến thuật — mô phỏng trên dữ liệu thật</h2>
+    <p>Mỗi coin được đi hết 400 nến lịch sử: <b>mua khi vừa vào Pha 2</b> (stageAt chuyển 1→2 hoặc 3→2), <b>thoát bằng trailing stop</b> — đóng cửa dưới max(MA150, đỉnh sau mua −25%) hoặc rớt Pha 4. Không đếm trùng: mỗi lần vào lệnh chỉ tính khi có lệnh mới.</p>
+  </div>
+  <section class="breadth" id="btSec">
+    <div id="btTiles"></div>
+    <div id="btTable"></div>
+  </section>
+
+  <div class="sec-head"><h2>Toàn bộ danh mục quét</h2></div>
+  <section class="tablewrap">
+    <div class="tbar">
+      <input type="search" id="q" placeholder="Tìm mã…" style="width:140px">
+      <select id="fStage">
+        <option value="">Tất cả pha</option>
+        <option value="1">Pha 1 — Tích lũy</option>
+        <option value="2">Pha 2 — Sóng đẩy</option>
+        <option value="3">Pha 3 — Phân phối</option>
+        <option value="4">Pha 4 — Giảm giá</option>
+      </select>
+      <select id="fBkt"><option value="">Mọi hạng</option></select>
+      <select id="fSec"><option value="">Mọi nhóm ngành</option></select>
+      <select id="fLiq">
+        <option value="1000000" selected>Vol24 ≥ $1M</option>
+        <option value="0">Mọi coin</option>
+        <option value="10000000">Vol24 ≥ $10M</option>
+        <option value="50000000">Vol24 ≥ $50M</option>
+        <option value="100000000">Vol24 ≥ $100M</option>
+      </select>
+      <select id="fSig">
+        <option value="">Mọi trạng thái</option>
+        <option value="buy">Có tín hiệu mua</option>
+        <option value="sell">Có tín hiệu ra</option>
+        <option value="shift">Vừa đổi pha</option>
+        <option value="risk">Rủi ro chạy xa</option>
+      </select>
+      <span class="num" id="cRows" style="margin-left:auto;font-size:12px;color:var(--muted)"></span>
+    </div>
+    <div class="scroll"><table class="big" id="tbl"><thead></thead><tbody></tbody></table></div>
+    <div class="foot"><span>Bấm tiêu đề cột để sắp xếp.</span><span id="src"></span></div>
+  </section>
+
+  <section class="legend">
+    <h3>Đọc bảng theo chu kỳ — bản crypto Top 500</h3>
+    <ul>
+      <li><b>Pha 1 → 2</b> vẫn là điểm mua mạnh nhất: <code>Vào = 3</code> kèm <code>Pha trước = 1</code>. Trong Pha 2, mua tiếp khi <code>Vào = 2</code> — đóng cửa vượt đỉnh nền 40 ngày; <code>T-n</code> cho biết sự kiện cách đây mấy ngày.</li>
+      <li><b>Thoát sớm</b> khi <code>Ra = 1</code>: còn Pha 2 nhưng vừa mất MA ngắn. <code>Ra = 2</code>: đã rời Pha 2.</li>
+      <li><b>Rủi ro chạy xa</b>: giá vượt MA ngắn hơn <code>40%</code> hoặc MA dài hơn <code>100%</code> → cấp 1 (giảm tỷ trọng); gấp đôi ngưỡng đó → cấp 2, chặn tín hiệu mua. Ngưỡng nới rộng hơn bản cổ phiếu vì crypto biến động mạnh hơn nhiều.</li>
+      <li><b>Dòng tiền theo nhóm</b>: CoinGecko gắn ngành (AI, Layer 1/2, Meme, DeFi, RWA…) cho từng coin; "share vol" = tỷ trọng khối lượng USD của nhóm trong toàn danh mục. <b>Dịch chuyển 30 ngày</b> so 20 ngày gần nhất với 20 ngày trước đó — dương = tiền đang chảy VÀO nhóm, âm = chảy RA. Bấm một dòng nhóm để lọc bảng coin theo ngành đó. Coin không khớp ngành nào rơi vào "Khác".</li>
+      <li><b>Cung lưu hành / tối đa</b>: số coin đang thực sự trôi nổi so với tổng cung (từ CoinGecko, cập nhật theo phiên). Cung lưu hành thấp + FDV lớn so với vốn hoá = lượng token chưa mở khoá còn rất lớn, dễ bị bán dần khi unlock.</li>
+      <li><b>Chuyện gì đang xảy ra</b>: hai danh mục do máy chấm từ chính số liệu trên nến — <b>🎯 Sắp bùng nổ</b> (coin Pha 1/2 còn cách đỉnh nền ≤6%, nền dài gọn, U/D vol dương, MA150 dốc lên, RS khỏe; đã căng >40% trên MA30 bị trừ điểm để tránh đu đỉnh) và <b>⚠️ Coi chừng bị xả</b> (vừa rời Pha 2, căng so MA30, đã tăng >150% từ đáy, ngày giảm nặng vol, funding đông long). Chỉ chấm coin Vol24 ≥ $10M. Bấm một dòng để soi coin đó trong bảng. Đây là danh mục đáng watchlist, không phải lệnh mua bán.</li>
+      <li><b>Pha thô</b> là pha của ngày hôm trước; khác <b>Pha</b> nghĩa là vừa đổi pha ngay hôm nay.</li>
+      <li><b>Khung tuần (Tuần)</b>: pha tính trên nến tuần (MA30 tuần ≈ 210 ngày) — đúng khung gốc của Weinstein. Khi Pha ngày = Pha tuần (cùng 2) ô Pha sáng viền nhấp nháy = sóng đẩy đồng thuận cả hai khung, đáng tin nhất.</li>
+      <li><b>Độ rộng thị trường</b>: % coin Pha 2, số coin phá đỉnh/đáy 40 ngày hôm nay. <b>Breadth thrust</b> (≥20 đỉnh mới và gấp ≥3 lần đáy mới) là nến nền mua tốt nhất cho mọi tín hiệu; ngược lại cân bằng đỉnh/đáy thấp = thị trường phân hoá, dè dặt.</li>
+      <li><b>Up/Down Vol 20 ngày</b>: tổng khối lượng ngày tăng chia ngày giảm. <code>&gt;1.3×</code> (xanh) = tiền vào thật; <code>&lt;0.7×</code> (đỏ) = bên bán chiếm ưu thế. Đây là bằng chứng volume Weinstein đòi hỏi.</li>
+      <li><b>Nền·Sâu</b>: độ rộng (tuần) × độ sâu (%) của vùng tích luỹ trước nhịp hiện tại. Nền càng dài và gọn, breakout về sau càng đáng tin.</li>
+      <li><b>Stop gợi ý</b>: <code>max(MA30, giá − 2×ATR14)</code> — mức cắt lỗ hợp lý theo biến động thực của coin, kèm % cách giá hiện tại. ATR cao = stop xa = position size phải nhỏ lại.</li>
+      <li><b>RS/BTC</b>: độ dốc 20 ngày của đường coin/BTC. <b>⚡</b> = RS-line đang ở đỉnh 90 ngày (leader mạnh hơn BTC). <b>Funding</b>: phí 8h thị trường futures Binance — dương cao (đỏ) là long đông đặc, dễ kích hoạt ép giá xuống.</li>
+      <li><b>Cung%</b>: % token đang lưu hành so với tổng/FDV. Dưới 30% (cam) nghĩa là phần lớn cung còn khoá → rủi ro mở khoá bán dần.</li>
+      <li><b>Kiểm chứng chiến thuật</b>: mô phỏng đúng bộ luật vào/ra của bảng trên ~400 nến của mọi coin, cho biết tỷ lệ thắng, lãi trung bình, profit factor theo từng lối vào. Chưa tính phí/slippage.</li>
+      <li><b>PnL từ đáy</b>: % giá hiện tại so với đáy thấp nhất 200 ngày — "đã chạy bao xa từ đáy". <b>PnL bùng nổ</b>: % so với <i>điểm bùng nổ</i> = ngày đóng cửa vượt đỉnh 40 ngày và giữ được tới nay (không thủng 97%). <b>Giữ vỡ nền</b> (vd <code>35d</code>): số ngày duy trì trạng thái phá vỡ đó — rê chuột xem ngày & giá bùng nổ; <code>–</code> là chưa có đợt vỡ nền nào còn nguyên. <b>Vol bùng nổ×</b>: khối lượng ngày bùng nổ gấp mấy lần TB20 trước đó (≥1.5–2× là vỡ nền có tiền thật).</li>
+      <li>MA dài = <code>MA150 ngày</code> ≈ 30 tuần của Weinstein (crypto chạy 7 ngày/tuần). MA ngắn = <code>MA30 ngày</code>. Độ dốc đo trên 20 ngày, ngưỡng ±1%.</li>
+      <li><b>RS</b> = lợi nhuận 20 ngày của coin trừ lợi nhuận trung bình equal-weight của chính danh mục đang quét — dương là khỏe hơn mặt bằng chung.</li>
+      <li><b>Tín hiệu</b>: cột tín hiệu theo đúng lý thuyết Weinstein — <span class="sig buy">BUY T-20</span> = điểm mua (coin vào Pha 2) cách đây 20 nến D; <span class="sig buy">BUY T0</span> = ngay hôm nay; <span class="sig sell">SELL T-1</span> = điểm bán (rời Pha 2 / mất MA ngắn) cách đây 1 ngày; <span class="sig buy">BREAK T-n</span> = đang Pha 2 và vừa phá đỉnh nền ở ngày thứ n. Bấm tiêu đề cột để xếp tín hiệu mới nhất lên đầu. <b>Nhịp 5n</b>: % giá + vol 5 ngày gần nhất so TB20 — cửa sổ 20 ngày của pha chậm với cú bật đầu tiên (DOGE/L2 nổ 2–3 ngày nhưng 20 ngày vẫn "mềm" là vì vậy); ⚡ = 5 ngày tăng ≥10% kèm vol ≥1.2× = đang bùng nổ thật sự.</li>
+      <li><b>Nguồn</b>: cột Nguồn — B = Binance, G = Gate.io, K = KuCoin, M = MEXC, O = OKX, Y = Bybit, C = CoinGecko. Coin thử sàn chính trước, lỗi/treo (timeout 8s) tự lần sang sàn kế; coin không có cặp USDT ở cả sáu sàn (token sàn, quỹ token hoá…) được lấy nến ngày từ CoinGecko ở chế độ nền sau khi bảng hiện. <b>Vì sao không bao giờ đủ 500</b>: top 500 CoinGecko có ~60–90 stablecoin / coin wrapped / quỹ token hoá bị loại từ đầu, cộng coin mới dưới ~6 tháng chưa đủ cửa sổ MA150 — số còn lại (~400) đều có mặt.</li>
+      <li>Coin vốn hoá nhỏ thanh khoản mỏng, tín hiệu pha nhiễu hơn và dễ bị thao túng — dùng bộ lọc Vol24 để soi nhóm chất lượng. Coin có lịch sử dưới ~6 tháng bị loại vì chưa đủ cửa sổ MA150.</li>
+      <li>Đây là công cụ theo dõi pha theo nguyên tắc Weinstein — <b>không phải khuyến nghị đầu tư</b>; các ngưỡng là kinh nghiệm, chưa backtest riêng cho crypto.</li>
+    </ul>
+  </section>
+</div>
+
+<script>
+'use strict';
+/* ═══ DANH MỤC: TỰ NẠP ════════════════════════════════════════════════════
+   Top 500 vốn hoá từ CoinGecko (2 calls, không cần key), loại stablecoin +
+   wrapped/staked + token quỹ + trùng mã. Nến 1D: Binance → Gate.io → KuCoin
+   → MEXC, thử lần lượt tới khi ăn (mỗi request timeout 8s). Coin không khớp
+   cặp hoặc thiếu lịch sử → bỏ qua, đếm ở dòng tiêu đề. Đổi TOP_N để chỉnh
+   quy mô. */
+const TOP_N=500;
+const MAJORS=['BTC','ETH','BNB','SOL','DOGE','TRX'];
+const BKTS=['Top 10','11–50','51–150','151–300','301–500'];
+const bucket=rk=>rk<=10?BKTS[0]:rk<=50?BKTS[1]:rk<=150?BKTS[2]:rk<=300?BKTS[3]:BKTS[4];
+
+const STABLES=new Set(['USDT','USDC','DAI','USDE','FUSD','FDUSD','TUSD','PYUSD','USDS','USD1','USDP','GUSD','BUSD','FRAX','USDD','USDX','USDR','SUSD','CRVUSD','DOLA','GHO','LUSD','USDL','USDY','USDTB','RLUSD','USDF','USDM','USDV','USD0','USCC','USCB','USN','UST','USTC','XUSD','USDQ','USX','DEUSD','SUSDE','SUSDS','BUIDL','USYC','MUSD','AUSD','USDA','OUSD','USDG','APXUSD','USDAI','EURR']);
+function isJunk(c){
+  const s=(c.symbol||'').toUpperCase(),n=c.name||'';
+  if(STABLES.has(s))return true;
+  if(/^(USD|EUR|GBP|JPY|CNY|CNH|AUD|CAD|CHF|SEK|NOK|DKK|MXN|BRL|TRY|ZAR|KRW|INR|RUB|PLN|SGD|HKD|TWD|VND)/.test(s))return true;
+  if(/(staked|restaked|wrapped|bridged|liquid|peg|gold|silver|tether|dollar|euro |pound|swiss|turkish|brazilian|singapore|yen|fund|treasury|bond|securit|money market|heloc|t-bill|short-duration)/i.test(n))return true;
+  if(/\b(usd|eur|gbp)\b/i.test(n))return true;
+  if(/^w(eth|btc|avax|matic|sol|ftm|near|dot|uni|link|bnb|btt|nude|solvbtc)/i.test(s))return true;
+  return false;
+}
+
+/* ═══ TIỆN ÍCH ═══ */
+const $=id=>document.getElementById(id);
+const mean=a=>a.reduce((x,y)=>x+y,0)/a.length;
+const maOf=(c,i,k)=>mean(c.slice(i-k+1,i+1));
+const f1=v=>v===null||v===undefined?'–':v.toFixed(1);
+const f2=v=>v===null||v===undefined?'–':v.toFixed(2);
+const sg=v=>v===null||v===undefined?'':(v>0?'pos':(v<0?'neg':''));
+const pm=v=>(v>0?'+':'')+v.toFixed(2);
+const fp=p=>p>=1000?Math.round(p).toLocaleString('en-US'):p>=1?p.toFixed(2):p>=0.01?p.toFixed(4):Number(p.toPrecision(3)).toString();
+const fmcap=v=>!v?'–':v>=1e9?(v/1e9).toFixed(v>=1e10?0:1)+'B':v>=1e6?(v/1e6).toFixed(0)+'M':v>=1e3?(v/1e3).toFixed(0)+'K':String(Math.round(v));
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+
+/* ═══ MẠNG ═══ */
+const BH=['https://data-api.binance.vision','https://api.binance.com'];
+const GATE='https://api.gateio.ws';
+const KC='https://api.kucoin.com';
+const MXC='https://api.mexc.com';
+const CG='https://api.coingecko.com/api/v3';
+const FAPI='https://fapi.binance.com';
+const FNGU='https://api.alternative.me/fng/?limit=8';
+/* dữ liệu phụ toàn thị trường (1 call mỗi loại, lỗi thì bỏ trống, không chặn pipeline chính) */
+let FUND={},FNG=null,BT=null;
+/* ═══ PRO: ngành (category CoinGecko) — ưu tiên = thứ tự gọi, coin trùng ngành lấy ngành đầu.
+   Chỉ 8 nhóm lớn: CoinGecko free tier ~5 call/phút, gọi nhiều là 429 dây chuyền. ═══ */
+const SECTORS=[['artificial-intelligence','AI'],['layer-1','Layer 1'],['layer-2','Layer 2'],
+  ['meme-token','Meme'],['decentralized-finance-defi','DeFi'],['gaming','GameFi'],
+  ['real-world-assets-rwa','RWA'],['depin','DePIN']];
+const SECCK='wsn_sectors_v1',SECFRESH=24*3600*1000;
+let SECMAP=null; /* {coinId: 'AI'|...} — null nếu chưa tải được */
+async function cgSectors(){
+  try{const ca=JSON.parse(localStorage.getItem(SECCK)||'null');
+    if(ca&&Date.now()-ca.ts<SECFRESH&&ca.map){SECMAP=ca.map;return;}}catch(e){}
+  const map={};let got=0;
+  for(const [slug,name] of SECTORS){
+    let any=false;
+    for(let attempt=0;attempt<3&&!any;attempt++){
+      try{
+        /* 1 page 250 coin theo mcap của ngành; tries=3 để fetchJ tự chờ 429 */
+        const j=await fetchJ(CG+'/coins/markets?vs_currency=usd&category='+slug+'&per_page=250&page=1&order=market_cap_desc',3);
+        if(Array.isArray(j)&&j.length){j.forEach(c=>{if(map[c.id]===undefined)map[c.id]=name;});any=true;}
+      }catch(e){await sleep(4000);}
+    }
+    if(any)got++;
+    await new Promise(r=>setTimeout(r,5000)); /* CoinGecko free ~5 call/phút */
+  }
+  if(got>=3&&Object.keys(map).length>=200){SECMAP=map;try{localStorage.setItem(SECCK,JSON.stringify({ts:Date.now(),map}));}catch(e){}}
+}
+/* MỌI request có timeout — một kết nối treo (gateio/kucoin hay gặp trên mạng
+   VN) không được phép chặn cả pool. Hỏng sàn này tự rơi sang sàn kế. */
+async function jfetch(url,ms){
+  ms=ms||8000;
+  const ctrl=new AbortController();
+  const t=setTimeout(()=>ctrl.abort(),ms);
+  try{return await fetch(url,{cache:'no-store',signal:ctrl.signal});}
+  finally{clearTimeout(t);}
+}
+async function fetchJ(url,tries){
+  tries=tries||1;let err=null;
+  for(let i=0;i<tries;i++){
+    try{const r=await jfetch(url);
+      if(r.ok)return await r.json();
+      err=new Error('HTTP '+r.status);
+      if(r.status===429&&i<tries-1){await sleep(3000);continue;}
+      if(r.status>=500&&i<tries-1){await sleep(1200);continue;}
+      break; /* 4xx (cặp không tồn tại…) → fail ngay, đừng ngủ lại vô ích */
+    }catch(e){err=e;if(i<tries-1){await sleep(800);continue;}break;}
+  }
+  throw err||new Error('không kết nối được');
+}
+let bHost=0;
+async function bGet(path){
+  let err=null;
+  for(let i=0;i<BH.length;i++){
+    const j=(bHost+i)%BH.length;
+    try{const r=await jfetch(BH[j]+path);
+      if(r.ok){bHost=j;return await r.json();}
+      err=new Error('HTTP '+r.status);}
+    catch(e){err=e;}
+  }
+  throw err;
+}
+async function pool(items,n,fn){
+  const out=new Array(items.length);let i=0;
+  await Promise.all(Array.from({length:n},async()=>{
+    while(i<items.length){const k=i++;
+      try{out[k]=await fn(items[k],k);}catch(e){out[k]=null;}
+    }}));
+  return out;
+}
+
+/* ── bước 1: danh mục Top N từ CoinGecko ── */
+async function cgMarkets(){
+  const all=[];
+  for(let page=1;page<=Math.ceil(TOP_N/250);page++){
+    const j=await fetchJ(CG+'/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=250&page='+page,3);
+    if(!Array.isArray(j)||!j.length)throw new Error('CoinGecko trả danh mục rỗng');
+    all.push(...j);
+    $('meta').textContent='Đã nạp danh mục '+all.length+' / '+TOP_N+'…';
+    if(page<=Math.ceil(TOP_N/250)-1)await sleep(500);
+  }
+  return all;
+}
+/* ── bước 2: bảng cặp khả dụng ── */
+async function loadPairSets(){
+  const b=new Set(),g=new Set(),k=new Set(),m=new Set(),o=new Set(),y=new Set();
+  try{const j=await bGet('/api/v3/exchangeInfo');
+    j.symbols.forEach(s=>{if(s.status==='TRADING'&&s.quoteAsset==='USDT')b.add(s.baseAsset);});}catch(e){}
+  try{const j=await fetchJ(GATE+'/api/v4/spot/currency_pairs',2);
+    j.forEach(p=>{if(p.quote==='USDT')g.add(p.base);});}catch(e){}
+  try{const j=await fetchJ(KC+'/api/v1/market/allTickers',2);
+    ((j.data&&j.data.ticker)||[]).forEach(t=>{if(/-USDT$/.test(t.symbol))k.add(t.symbol.replace('-USDT',''));});}catch(e){}
+  try{const j=await fetchJ(MXC+'/api/v3/exchangeInfo',2);
+    (j.symbols||[]).forEach(s=>{if(s.status==='1'&&/USDT$/.test(s.symbol))m.add(s.baseAsset);});}catch(e){}
+  try{const j=await fetchJ('https://www.okx.com/api/v5/market/tickers?instType=SPOT',2);
+    ((j&&j.data)||[]).forEach(t=>{if(/-USDT$/.test(t.instId))o.add(t.instId.replace('-USDT',''));});}catch(e){}
+  try{const j=await fetchJ('https://api.bybit.com/v5/market/instruments-info?category=spot&limit=1000',2);
+    (((j&&j.result)||{}).list||[]).forEach(t=>{if(/USDT$/.test(t.symbol))y.add(t.symbol.slice(0,-4));});}catch(e){}
+  if(!b.size&&!g.size&&!k.size&&!m.size&&!o.size&&!y.size)throw new Error('Không đọc được bảng cặp từ cả sáu sàn');
+  return {b,g,k,m,o,y};
+}
+/* ── bước 3: ghép coin ↔ sàn (Binance → Gate → KuCoin → MEXC → OKX → Bybit → CoinGecko) ──
+   Coin không có cặp USDT ở đâu vẫn được GIỮ LẠI với ex=null — nến sẽ lấy sau qua
+   market_chart của CoinGecko (phase nền, xem cgBackfill). Nhờ vậy phủ gần hết 500. */
+function assign(coins,sets){
+  const seen=new Set(),plan=[];
+  for(const c of coins){
+    if(plan.length>=TOP_N)break;
+    if(isJunk(c))continue;
+    const base=(c.symbol||'').toUpperCase();
+    if(!base||base.length>12||seen.has(base))continue;
+    let ex=null;
+    if(sets.b.has(base))ex='binance';else if(sets.g.has(base))ex='gate';
+    else if(sets.k.has(base))ex='kucoin';else if(sets.m.has(base))ex='mexc';
+    else if(sets.o.has(base))ex='okx';else if(sets.y.has(base))ex='bybit';
+    seen.add(base);
+    /* % cung lưu hành: circ/max, fallback mcap/FDV (coin không có max supply) */
+    let supPct=null;
+    if(c.max_supply>0&&c.circulating_supply!=null)supPct=c.circulating_supply/c.max_supply*100;
+    else if(c.fully_diluted_valuation>0&&c.market_cap>0)supPct=c.market_cap/c.fully_diluted_valuation*100;
+    plan.push({id:c.id,base,name:c.name,rank:c.market_cap_rank||seen.size,
+      mcap:c.market_cap||null,vol24:c.total_volume||null,supPct,
+      circ:c.circulating_supply||null,maxs:c.max_supply||c.total_supply||null,fdv:c.fully_diluted_valuation||null,
+      sector:(SECMAP&&SECMAP[c.id])||null,ex});
+  }
+  return plan;
+}
+/* ── bước 4: nến 1D ── */
+async function klineB(base){
+  const k=await bGet('/api/v3/klines?symbol='+base+'USDT&interval=1d&limit=400');
+  if(!Array.isArray(k)||k.length<172)throw new Error('thiếu nến');
+  return {c:k.map(x=>+x[4]),h:k.map(x=>+x[2]),l:k.map(x=>+x[3]),v:k.map(x=>+x[5]),ex:'binance'};
+}
+async function klineG(base){
+  const k=await fetchJ(GATE+'/api/v4/spot/candlesticks?currency_pair='+base+'_USDT&interval=1d&limit=400',2);
+  if(!Array.isArray(k)||k.length<172)throw new Error('thiếu nến');
+  /* Gate: [t, volQuote, close, high, low, open, volBase, closed] — cũ → mới */
+  return {c:k.map(x=>+x[2]),h:k.map(x=>+x[3]),l:k.map(x=>+x[4]),v:k.map(x=>+x[6]),ex:'gate'};
+}
+async function klineK(base){
+  const end=Math.floor(Date.now()/1000),start=end-420*86400;
+  const j=await fetchJ(KC+'/api/v1/market/candles?type=1day&symbol='+base+'-USDT&startAt='+start+'&endAt='+end,2);
+  /* KuCoin: {code,data:[[time, open, close, high, low, volBase, volQuote],…]} — MỚI TRƯỚC, đảo lại */
+  const k=j&&Array.isArray(j.data)?j.data.slice().reverse():[];
+  if(k.length<172)throw new Error('thiếu nến');
+  return {c:k.map(x=>+x[2]),h:k.map(x=>+x[3]),l:k.map(x=>+x[4]),v:k.map(x=>+x[5]),ex:'kucoin'};
+}
+async function klineM(base){
+  const k=await fetchJ(MXC+'/api/v3/klines?symbol='+base+'USDT&interval=1d&limit=400',2);
+  if(!Array.isArray(k)||k.length<172)throw new Error('thiếu nến');
+  /* MEXC: cùng layout Binance [t, open, high, low, close, volBase, …] */
+  return {c:k.map(x=>+x[4]),h:k.map(x=>+x[2]),l:k.map(x=>+x[3]),v:k.map(x=>+x[5]),ex:'mexc'};
+}
+async function klineO(base){
+  const j=await fetchJ('https://www.okx.com/api/v5/market/candles?instId='+base+'-USDT&bar=1D&limit=300',2);
+  /* OKX: {data:[[ms, o, c, h, l, volBase, volQuote, …],…]} — MỚI TRƯỚC, đảo lại */
+  const k=j&&Array.isArray(j.data)?j.data.slice().reverse():[];
+  if(k.length<172)throw new Error('thiếu nến');
+  return {c:k.map(x=>+x[2]),h:k.map(x=>+x[3]),l:k.map(x=>+x[4]),v:k.map(x=>+x[5]),ex:'okx'};
+}
+async function klineY(base){
+  const j=await fetchJ('https://api.bybit.com/v5/market/kline?category=spot&symbol='+base+'USDT&interval=D&limit=400',2);
+  /* Bybit: {result:{list:[[start, o, h, l, c, volBase, turnover],…]}} — MỚI TRƯỚC, đảo lại */
+  const k=j&&j.result&&Array.isArray(j.result.list)?j.result.list.slice().reverse():[];
+  if(k.length<172)throw new Error('thiếu nến');
+  return {c:k.map(x=>+x[4]),h:k.map(x=>+x[2]),l:k.map(x=>+x[3]),v:k.map(x=>+x[5]),ex:'bybit'};
+}
+const KL={binance:klineB,gate:klineG,kucoin:klineK,mexc:klineM,okx:klineO,bybit:klineY};
+let progN=0;
+async function fetchAll(plan){
+  const data={};progN=0;const total=plan.length;
+  const prog=()=>{progN++;if(progN%25===0||progN>=total)$('meta').textContent='Đang tải nến '+progN+' / '+total+'…';};
+  /* một pool duy nhất; coin thử sàn chính trước, lỗi thì lần lượt thử các sàn còn lại */
+  await pool(plan,6,async pl=>{
+    if(!pl.ex){prog();return;} /* assign đã biết không sàn nào có cặp → thẳng hàng chờ CoinGecko */
+    const order=[pl.ex,'binance','gate','kucoin','mexc','okx','bybit'].filter(x=>x).filter((x,i,a)=>a.indexOf(x)===i);
+    for(const ex of order){
+      try{data[pl.base]=await KL[ex](pl.base);break;}catch(e){}
+    }
+    prog();
+  });
+  const ok=Object.keys(data).length;
+  if(ok<50)throw new Error('chỉ lấy được '+ok+'/'+total+' nến — có thể bị chặn mạng hoặc API lỗi');
+  return data;
+}
+
+/* ═══ CACHE (chỉ số đã tính, không lưu nến thô) ═══ */
+const CK='wsn_cryptopro_v3',FRESH=15*60*1000;
+function cacheSave(){try{
+  const slim=rows.map(r=>{const o=Object.assign({},r);delete o.c;delete o.h;delete o.v;return o;});
+  localStorage.setItem(CK,JSON.stringify({ts:Date.now(),missing,rows:slim,bt:BT,fng:FNG}));
+}catch(e){}}
+function cacheLoad(){try{const o=JSON.parse(localStorage.getItem(CK));return o&&o.rows&&o.rows.length?o:null;}catch(e){return null;}}
+
+/* ═══ BỘ PHÂN LOẠI PHA (WEINSTEIN) ═══
+   Pha 2: giá trên MA150, MA150 dốc lên ≥1%/20 ngày, còn trên MA30.
+   Pha 4: giá dưới MA150, MA150 dốc xuống ≤−1%/20 ngày, dưới MA30.
+   Trên MA150 mà không đủ điều kiện Pha 2 → Pha 3. Dưới MA150 mà MA chưa
+   dốc xuống: phân biệt Pha 1 (nền tạo SAU một nhịp giảm) với Pha 3 (vừa
+   gãy MA sau một nhịp leo) bằng độ dốc MA150 của cửa sổ 20 ngày trước đó. */
+function stageAt(c,i){
+  if(i<170)return 0;
+  const p=c[i],m=maOf(c,i,150),s=maOf(c,i,30),m20=maOf(c,i-20,150);
+  const sl=(m/m20-1)*100;
+  if(p>m)return(sl>1&&p>s)?2:3;
+  if(sl<-1&&p<s)return 4;
+  if(i>=210){const m40=maOf(c,i-40,150),m60=maOf(c,i-60,150);
+    if((m40/m60-1)*100>1)return 3;}
+  return 1;
+}
+
+function buildCoin(pl,d){
+  const c=d.c,h=d.h,v=d.v,l=d.l||d.h,n=c.length;
+  if(n<171)return null;
+  const px=c[n-1];
+  const ma150=maOf(c,n-1,150),ma30=maOf(c,n-1,30);
+  const ma150p=maOf(c,n-21,150),ma30p=maOf(c,n-21,30);
+  const slope150=(ma150/ma150p-1)*100,slope30=(ma30/ma30p-1)*100;
+  let below30=0;for(let i=n-1;i>=170;i--){if(c[i]<maOf(c,i,30))below30++;else break;}
+  const top40=Math.max.apply(null,h.slice(-40));
+  const top40p=Math.max.apply(null,h.slice(-41,-1));
+  const top52=Math.max.apply(null,h.slice(-365));
+  const vol20=mean(v.slice(-21,-1))||1,volR=v[n-1]/vol20;
+  const ret20=(px/c[n-21]-1)*100;
+  const stage=stageAt(c,n-1),raw=stageAt(c,n-2);
+  let phien=1;for(let i=n-2;i>=170;i--){if(stageAt(c,i)===stage)phien++;else break;}
+  let vao3=null;
+  if(stage===2)for(let k=0;k<=20;k++){const i=n-1-k;if(i-1<170)break;
+    const a=stageAt(c,i),b=stageAt(c,i-1);
+    if(a===2&&(b===1||b===3)){vao3={tn:k,from:b};break;}
+    if(a!==2)break;
+  }
+  const vao2=(stage===2&&px>top40p)?0:null;
+  let ra1=null;
+  if(stage===2&&px<ma30){for(let k=0;k<=5;k++){const i=n-1-k;if(i-1<170)break;
+    if(c[i]<maOf(c,i,30)&&c[i-1]>=maOf(c,i-1,30)){ra1=k;break;}}}
+  let ra2=null,ra2tn=0;
+  if(stage>2){/* SELL bán kính: coin đang ngoài Pha 2 — tìm ngày CUỐI CÙNG còn ở Pha 2,
+                 giữ chip SELL T-n sống tới 21 ngày để theo dõi điểm bán trên bảng */
+    for(let k=1;k<=21;k++){const i=n-1-k;if(i<170)break;
+      const s=stageAt(c,i);
+      if(s===2){ra2=2;ra2tn=k-1;break;}
+      if(s===1)break;}
+  }
+  const vsDai=(px/ma150-1)*100,vsNgan=(px/ma30-1)*100;
+  const dinhNen=(px/top40-1)*100,d52=(px/top52-1)*100;
+  const rui=(vsNgan>80||vsDai>200)?2:((vsNgan>40||vsDai>100)?1:0);
+  const blocks=[];for(let b=0;b<6;b++)blocks.push(mean(c.slice(n-150+b*10,n-140+b*10)));
+  /* ── PnL từ đáy + điểm bùng nổ (breakout) của xu hướng cũ ──
+     đáy = close thấp nhất 200 ngày; bùng nổ = ngày đóng cửa vượt đỉnh 40 ngày
+     trước đó (kháng cự cũ) và ĐỨNG VỮNG tới hôm nay, nghĩa là không ngày nào
+     đóng cửa thủng quá 10% dưới chính kháng cự đó (cho phép retest). Quét ngược
+     lấy ngày bùng nổ SỚM NHẤT còn giữ được → gốc của nhịp hiện tại. */
+  let dayLo=Infinity;for(let i=Math.max(0,n-200);i<n;i++)if(c[i]<dayLo)dayLo=c[i];
+  const pnlDay=dayLo>0?(px/dayLo-1)*100:null;
+  let bI=-1;
+  outer:for(let i=n-1;i>=210;i--){
+    let hi=-Infinity;for(let j=i-40;j<i;j++)if(h[j]>hi)hi=h[j];
+    if(c[i]<=hi)continue;                        /* i không phá kháng cự 40 ngày */
+    for(let j=i+1;j<n;j++)if(c[j]<hi*0.90)break outer;  /* nhịp này đã thủng → gốc nằm sau */
+    bI=i;
+  }
+  let bAge=0,bPx=null,pnlB=null,bVol=null,bD=null;
+  if(bI>=0){
+    bAge=n-1-bI;bPx=c[bI];pnlB=(px/bPx-1)*100;
+    const av=mean(v.slice(Math.max(0,bI-20),bI))||1;
+    bVol=v[bI]/av;
+    bD=new Date(Date.now()-(n-1-bI)*864e5).toLocaleDateString('vi-VN');
+  }
+  /* ═══ PRO ═══ */
+  /* U/D volume 20 ngày: tổng vol ngày tăng / tổng vol ngày giảm — bằng chứng tiền thật */
+  let upV=0,dnV=0;for(let i=n-20;i<n;i++){if(c[i]>c[i-1])upV+=v[i];else if(c[i]<c[i-1])dnV+=v[i];}
+  const udVol=dnV>0?upV/dnV:(upV>0?9.99:1);
+  const nh40=px>top40p,nl40=px<Math.min.apply(null,c.slice(-40));
+  /* Nền: 120 ngày trước điểm bùng nổ (hoặc 90 ngày gần nhất nếu chưa vỡ) — rộng × sâu */
+  const bEnd=bI>=0?bI:n-1,bStart=Math.max(170,bEnd-120);
+  let nenW=0,nenD=null;
+  if(bEnd>bStart){let bh=-Infinity,bl=Infinity;
+    for(let i=bStart;i<bEnd;i++){if(h[i]>bh)bh=h[i];if(c[i]<bl)bl=c[i];}
+    nenW=bEnd-bStart;nenD=bh>0?(bh-bl)/bh*100:null;}
+  /* ATR14 + stop gợi ý = max(MA30, giá − 2×ATR) */
+  let atr=0;for(let i=n-14;i<n;i++)atr+=Math.max(h[i]-l[i],Math.abs(h[i]-c[i-1]),Math.abs(l[i]-c[i-1]));
+  atr/=14;
+  const stop=Math.max(ma30,px-2*atr),stopPct=(stop/px-1)*100;
+  /* Pha TUẦN (Weinstein gốc dùng MA30 tuần): đóng cửa cách nhật 7 ngày, dốc 4 tuần ±1% */
+  const NW=Math.floor((n-1)/7)+1;let stageW=0;
+  if(NW>=34){const wc=[];for(let k=NW-1;k>=0;k--)wc.push(c[n-1-7*k]);
+    const mw=mean(wc.slice(NW-30)),mwp=mean(wc.slice(NW-34,NW-4)),slw=(mw/mwp-1)*100;
+    const m10=mean(wc.slice(NW-10)),pw=wc[NW-1];
+    stageW=pw>mw?((slw>1&&pw>m10)?2:3):((slw<-1&&pw<m10)?4:1);}
+  const fund=FUND[pl.base]!=null?FUND[pl.base]*100:null;
+  /* dòng tiền USD theo 3 cửa sổ: 7 ngày này, 20 ngày này, và 20 ngày CÁCH ĐÂY 30 ngày (gốc so rotation) */
+  const usdMean=(a,b)=>{let s=0,k=0;for(let i=Math.max(0,a);i<b;i++){s+=v[i]*c[i];k++;}return k?s/k:null;};
+  const usdV7=usdMean(n-7,n),usdV20=usdMean(n-20,n),usdVPrior=usdMean(n-50,n-30);
+  /* Nhịp 5 NGÀY: cửa sổ 20 ngày chậm với cú bật đầu tiên sau nền dài (bài học DOGE/L2:
+     20 ngày vẫn "mềm" trong khi 5 ngày gần nhất đã nổ + vol tăng) — ret5 và vol5/vol20 */
+  const ret5=n>=6?(px/c[n-6]-1)*100:null;
+  const vol5m=mean(v.slice(-5)),vol20m=mean(v.slice(-20));
+  const v5r=vol5m>0&&vol20m>0?vol5m/vol20m:null;
+  const flash=ret5!=null&&v5r!=null&&ret5>=10&&v5r>=1.2;
+  return {u:pl,tk:pl.base,name:pl.name,rank:pl.rank,mcap:pl.mcap,vol24:pl.vol24,
+    ex:d.ex||pl.ex,bkt:bucket(pl.rank),
+    c,h,v,n,p:px,gia:px,ma150,ma30,slope150,slope30,below30,
+    top40,top40p,top52,volR,ret20,stage,raw,phien,vsDai,vsNgan,dinhNen,d52,rui,blocks,
+    dayLo,pnlDay,bI,bAge,bPx,pnlB,bVol,bD,
+    udVol,nh40,nl40,nenW,nenD,atrP:atr/px*100,stop,stopPct,stageW,supPct:pl.supPct!=null?pl.supPct:null,fund,
+    ret5,v5r,flash,
+    usdV7,usdV20,usdVPrior,circ:pl.circ||null,maxs:pl.maxs||null,fdv:pl.fdv||null,sector:pl.sector||null,
+    vao:vao3?3:(vao2!==null?2:0),vaoFrom:vao3?vao3.from:0,
+    tn:vao3?vao3.tn:(vao2!==null?0:null),
+    ra:ra2!==null?2:(ra1!==null?1:0),tnRa:ra2!==null?ra2tn:(ra1!==null?ra1:null)};
+}
+
+function readiness(r){
+  const c=[{ok:r.vsDai>0,t:'giá trên MA dài'},{ok:r.slope150>1,t:'MA dài dốc lên'},
+    {ok:r.below30<10,t:'chưa mất MA ngắn'},{ok:r.dinhNen>-20,t:'chưa sụt sâu'}];
+  return {n:c.filter(x=>x.ok).length,miss:c.filter(x=>!x.ok).map(x=>x.t)};
+}
+
+/* ═══ DỰ PHÓNG MA150 (dùng blocks đã lưu trên row) ═══ */
+function projData(r){
+  const blocks=r.blocks;
+  const S01=10*(blocks[0]+blocks[1]),S4=10*(blocks[0]+blocks[1]+blocks[2]+blocks[3]);
+  const nguong=(1.5*r.ma150+S4-1.01*S01)/19.8;
+  const m=[r.ma150];
+  for(let b=0;b<6;b++)m.push(m[m.length-1]+10*(r.p-blocks[b])/150);
+  return {blocks,m,nguong,s20:(m[2]/m[0]-1)*100,s40:(m[4]/m[2]-1)*100,s60:(m[6]/m[4]-1)*100};
+}
+
+function notesFor(r,pr){
+  const miss=[];
+  if(!(r.vsDai>0))miss.push('giá trên MA dài');
+  if(!(r.slope150>1))miss.push('MA dài dốc lên ≥ 1%');
+  if(!(r.below30<10))miss.push('chưa mất MA ngắn');
+  if(!(r.dinhNen>-20))miss.push('chưa sụt quá 20% từ đỉnh nền');
+  const rd={n:4-miss.length,miss};
+  let flag,flagV;
+  if(r.stage===1){flag=rd.n>=3?'Gần đủ điều kiện Pha 2':'Đang tích lũy';flagV=rd.n>=3?'good':'bad';}
+  else if(r.stage===2){
+    if(r.rui===2){flag='Chặn — chạy xa cấp 2';flagV='bad';}
+    else if(r.rui===1){flag='Chạy xa — giảm tỷ trọng';flagV='bad';}
+    else if(r.dinhNen>-5){flag='Sát đỉnh nền';flagV='good';}
+    else{flag='Xu hướng còn nguyên';flagV='good';}
+  }else{flag='Ngoài vùng mua';flagV='bad';}
+  const b23=fp((pr.blocks[2]+pr.blocks[3])/2);
+  const roll=(r.p>(pr.blocks[2]+pr.blocks[3])/2)
+    ?'Khối giá thứ 3–4 sắp rơi ra ('+b23+') <b>thấp hơn giá hiện tại</b> — cửa sổ MA dài đang tự trẻ hoá theo hướng có lợi.'
+    :'Khối giá thứ 3–4 sắp rơi ra ('+b23+') <b>cao hơn giá hiện tại</b> — MA dài còn bị kéo xuống trước khi quay đầu.';
+  const proj=' Dự phóng độ dốc MA dài nếu giá đứng yên: <span class="n">'+pm(pr.s20)+'%</span> (20 ngày) → <span class="n">'+pm(pr.s40)+'%</span> (40 ngày) → <span class="n">'+pm(pr.s60)+'%</span> (60 ngày).';
+  let note,som;
+  if(r.stage===1){
+    note='Giá <span class="n">'+pm(r.vsDai)+'%</span> so với MA150, <span class="n">'+pm(r.vsNgan)+'%</span> so với MA30; độ dốc MA dài <span class="n">'+pm(r.slope150)+'%</span>/20 ngày, RS20 <span class="n">'+pm(r.rs)+'%</span> so với mặt bằng danh mục. Đã <b>'+r.phien+' ngày</b> ở Pha 1.';
+    som=miss.length?'Còn thiếu: <b>'+miss.join('</b>, <b>')+'</b>. Giá cần giữ để độ dốc MA dài đạt +1% sau 40 ngày: <b>'+fp(pr.nguong)+'</b> ('+pm((pr.nguong/r.p-1)*100)+'%).'
+      :'Đã đủ 4/4 điều kiện — chờ nến xác nhận đổi pha. Ngưỡng giữ độ dốc: <b>'+fp(pr.nguong)+'</b>.';
+  }else if(r.stage===2){
+    note='Pha 2 đã chạy <b>'+r.phien+' ngày</b>. Trên MA dài <span class="n">'+pm(r.vsDai)+'%</span>, trên MA ngắn <span class="n">'+pm(r.vsNgan)+'%</span>, cách đỉnh nền 40 ngày <span class="n">'+f1(r.dinhNen)+'%</span>, cách đỉnh 1 năm <span class="n">'+f1(r.d52)+'%</span>. Khối lượng hôm nay <span class="n">'+f2(r.volR)+'×</span> trung bình 20 ngày.';
+    som='Mốc thoát gần nhất: mất MA30 ở <b>'+fp(r.ma30)+'</b> ('+pm((r.ma30/r.p-1)*100)+'%). '
+      +(r.rui===2?'Giá đã chạy quá xa so với MA — tín hiệu mua bị chặn ở cấp 2.'
+        :r.rui===1?'Đã chạy xa so với MA — nếu vào mới thì giảm tỷ trọng.'
+        :'Cấu trúc còn nguyên.')
+      +(r.rs<0?' Lưu ý RS20 <b>âm</b>: tăng chậm hơn mặt bằng, thiên về giữ chứ không mua thêm.':'');
+  }else{
+    note='Pha '+r.stage+' · '+SNAMES[r.stage]+' — đã '+r.phien+' ngày. Giá <span class="n">'+pm(r.vsDai)+'%</span> so với MA150, độ dốc <span class="n">'+pm(r.slope150)+'%</span>/20 ngày, RS20 <span class="n">'+pm(r.rs)+'%</span>.';
+    som='Ngoài vùng mua theo Weinstein: chỉ quan sát lại khi giá vượt MA150 và MA dài bắt đầu dốc lên ≥ 1%.';
+  }
+  return {note,note2:roll+proj,som,flag,flagV,rd};
+}
+
+const SNAMES={1:'Tích lũy',2:'Sóng đẩy',3:'Phân phối',4:'Giảm giá'};
+const SVAR={1:'--s1',2:'--s2',3:'--s3',4:'--s4'};
+
+function ddCard(r){
+  if(!r)return '<article class="dd"><div class="dd-head" style="--sc:var(--line)"><span class="tk">—</span><span class="tag">Không có dữ liệu cho coin này</span></div></article>';
+  const pr=projData(r),nt=notesFor(r,pr),m=pr.m;
+  const W=340,H=138,PL=46,PR=16,PT=14,PB=28;
+  const vals=m.concat([r.p]);
+  const lo=Math.min.apply(null,vals),hi=Math.max.apply(null,vals);
+  const pad=(hi-lo)*0.18||1,LO=lo-pad,HI=hi+pad;
+  const X=i=>PL+(W-PL-PR)*(i/6),Y=v=>PT+(H-PT-PB)*(1-(v-LO)/(HI-LO));
+  const path=m.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+','+Y(v).toFixed(1)).join('');
+  const marks=[0,2,4,6].map(i=>'<circle cx="'+X(i).toFixed(1)+'" cy="'+Y(m[i]).toFixed(1)+'" r="3.2" fill="var(--accent)" stroke="var(--surface)" stroke-width="1.5"></circle>').join('');
+  const xlab=[2,4,6].map(i=>'<text x="'+X(i).toFixed(1)+'" y="'+(H-9)+'" fill="var(--muted)" font-size="9.5" text-anchor="middle" font-family="ui-monospace,monospace">'+(i*10)+'</text>').join('');
+  const ylab=[hi,lo].map(v=>'<text x="'+(PL-7)+'" y="'+(Y(v)+3.2).toFixed(1)+'" fill="var(--muted)" font-size="9.5" text-anchor="end" font-family="ui-monospace,monospace">'+fp(v)+'</text>').join('');
+  const conds=[
+    {ok:r.vsDai>0,t:'Giá trên MA dài',v:pm(r.vsDai)+'%'},
+    {ok:r.slope150>1,t:'MA dài dốc lên ≥ 1%',v:pm(r.slope150)+'%'},
+    {ok:r.below30<10,t:'Chưa mất MA ngắn 10 ngày',v:r.below30+' ngày'},
+    {ok:r.dinhNen>-20,t:'Chưa sụt quá 20% từ đỉnh nền',v:f1(r.dinhNen)+'%'}];
+  const vc=nt.flagV==='good'?'var(--s2)':'var(--s4)',vb=nt.flagV==='good'?'var(--s2-bg)':'var(--s4-bg)';
+  return '<article class="dd">'+
+   '<div class="dd-head" style="--sc:var('+SVAR[r.stage]+')">'+
+     '<span class="tk">'+r.tk+'</span>'+
+     '<span class="chip p'+r.stage+'">Pha '+r.stage+' · '+SNAMES[r.stage]+'</span>'+
+     '<span class="tag">'+r.phien+' ngày trong pha</span>'+
+     '<span class="flag" style="--fc:'+vc+';--fb:'+vb+'">'+nt.flag+'</span>'+
+     '<span class="px">'+fp(r.p)+'</span>'+
+   '</div>'+
+   '<div class="dd-body">'+
+    '<div class="dd-left"><p>'+nt.note+'</p>'+
+      '<ul class="cond">'+conds.map(c=>'<li><span class="mk '+(c.ok?'ok':'no')+'">'+(c.ok?'✓':'✕')+'</span>'+c.t+'<span class="v '+(c.ok?'pos':'neg')+'">'+c.v+'</span></li>').join('')+'</ul>'+
+      '<p>'+nt.note2+'</p>'+
+      '<div class="verdict" style="--vc:'+vc+';--vb:'+vb+'">'+nt.som+'</div></div>'+
+    '<div class="dd-right">'+
+      '<svg class="proj" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="MA dài dự phóng 60 ngày của '+r.tk+'">'+
+        '<line x1="'+PL+'" y1="'+Y(r.p).toFixed(1)+'" x2="'+(W-PR)+'" y2="'+Y(r.p).toFixed(1)+'" stroke="var(--s1)" stroke-width="1.2" stroke-dasharray="4 3"></line>'+
+        '<text x="'+(W-PR)+'" y="'+(Y(r.p)-5).toFixed(1)+'" fill="var(--s1)" font-size="9.5" text-anchor="end" font-family="ui-monospace,monospace">giá '+fp(r.p)+'</text>'+
+        '<path d="'+path+'" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"></path>'+
+        marks+xlab+ylab+
+        '<text x="'+PL+'" y="'+(H-9)+'" fill="var(--muted)" font-size="9.5" text-anchor="start" font-family="ui-monospace,monospace">ngày tới →</text>'+
+      '</svg>'+
+      '<table class="mtab">'+
+        '<tr class="hi"><td>Giá hiện tại</td><td>'+fp(r.p)+'</td></tr>'+
+        '<tr><td>20 ngày sắp rơi khỏi cửa sổ MA150</td><td>'+fp((pr.blocks[0]+pr.blocks[1])/2)+'</td></tr>'+
+        '<tr><td>20 ngày rơi tiếp sau đó</td><td>'+fp((pr.blocks[2]+pr.blocks[3])/2)+'</td></tr>'+
+        '<tr><td>20 ngày rơi sau nữa</td><td>'+fp((pr.blocks[4]+pr.blocks[5])/2)+'</td></tr>'+
+      '</table>'+
+      '<dl class="kv">'+
+        '<dt>Độ dốc MA dài hiện tại</dt><dd class="'+sg(r.slope150)+'">'+pm(r.slope150)+'%</dd>'+
+        '<dt>Dự phóng sau 20 ngày</dt><dd class="'+sg(pr.s20)+'">'+pm(pr.s20)+'%</dd>'+
+        '<dt>Dự phóng sau 40 ngày</dt><dd class="'+sg(pr.s40)+'">'+pm(pr.s40)+'%</dd>'+
+        '<dt>Dự phóng sau 60 ngày</dt><dd class="'+sg(pr.s60)+'">'+pm(pr.s60)+'%</dd>'+
+        '<dt>'+(r.stage===2?'Giá làm độ dốc rơi về 1%':'Giá cần giữ để đạt +1%')+'</dt><dd><b>'+fp(pr.nguong)+'</b> <span style="color:var(--muted)">('+pm((pr.nguong/r.p-1)*100)+'%)</span></dd>'+
+        '<dt>Đỉnh nền 40 ngày</dt><dd>'+fp(r.top40)+' <span style="color:var(--muted)">('+f1(r.dinhNen)+'%)</span></dd>'+
+        '<dt>Đỉnh 1 năm</dt><dd>'+fp(r.top52)+' <span style="color:var(--muted)">('+f1(r.d52)+'%)</span></dd>'+
+        '<dt>RS 20 ngày</dt><dd class="'+sg(r.rs)+'">'+pm(r.rs)+'%</dd>'+
+        '<dt>Độ dốc MA ngắn</dt><dd class="'+sg(r.slope30)+'">'+pm(r.slope30)+'%</dd>'+
+        (function(){const x=[];
+          const sgx=[];
+          if(r.vao>0)sgx.push('<span class="sig buy">'+(r.vao===2?'BREAK ':'BUY ')+(r.tn===0?'T0':'T-'+r.tn)+'</span>');
+          if(r.ra>0)sgx.push('<span class="sig sell">SELL '+(r.tnRa===0?'T0':'T-'+r.tnRa)+'</span>');
+          x.push('<dt>Tín hiệu Weinstein</dt><dd>'+(sgx.join(' ')||'<span style="color:var(--muted)">chưa có — đang '+({1:'tích lũy',2:'tăng giá',3:'phân phối',4:'giảm giá'}[r.stage]||'?')+'</span>')+'</dd>');
+          if(r.ret5!=null)x.push('<dt>Nhịp 5 ngày</dt><dd class="'+sg(r.ret5)+'">'+pm(r.ret5)+'%'+(r.v5r!=null?' · vol '+(r.v5r>=1?'+':'')+r.v5r.toFixed(2)+'× TB20':'')+(r.flash?' <b class="flash5">⚡ ĐANG BÙNG NỔ</b>':'')+'</dd>');
+          if(r.stageW)x.push('<dt>Pha trên khung TUẦN</dt><dd style="color:var('+SVAR[r.stageW]+')">'+r.stageW+(r.stageW===r.stage?' · khớp ngày ✓':' · lệch pha ngày')+'</dd>');
+          if(r.stop!=null)x.push('<dt>Stop gợi ý (2×ATR)</dt><dd>'+fp(r.stop)+' <span style="color:var(--muted)">'+r.stopPct.toFixed(1)+'% · ATR '+r.atrP.toFixed(1)+'%</span></dd>');
+          if(r.nenW)x.push('<dt>Vùng nền gần nhất</dt><dd>'+Math.round(r.nenW/7)+' tuần · sâu '+f1(r.nenD)+'%</dd>');
+          if(r.udVol!=null)x.push('<dt>Up/Down Vol 20 ngày</dt><dd class="'+(r.udVol>1.3?'pos':r.udVol<0.7?'neg':'')+'">'+r.udVol.toFixed(2)+'×</dd>');
+          if(r.rsB!=null&&r.tk!=='BTC')x.push('<dt>RS vs BTC 20 ngày</dt><dd class="'+sg(r.rsB)+'">'+pm(r.rsB)+'%'+(r.rsTop?' ⚡đỉnh RS':'')+'</dd>');
+          if(r.fund!=null)x.push('<dt>Funding Futures 8h</dt><dd class="'+(r.fund>=0.05?'neg':r.fund<=-0.02?'pos':'')+'">'+(r.fund>0?'+':'')+r.fund.toFixed(3)+'%</dd>');
+          if(r.supPct!=null||r.circ){
+            const f=v=>v>=1e9?(v/1e9).toFixed(2)+'B':v>=1e6?(v/1e6).toFixed(1)+'M':v>=1e3?(v/1e3).toFixed(0)+'K':String(Math.round(v));
+            let sup='';
+            if(r.supPct!=null){
+              const warn=r.supPct<40;
+              sup=' <span style="color:var(--muted)">('+(warn?'<b class="neg">':'')+r.supPct.toFixed(0)+'%'+(warn?' — áp lực unlock)</b>':')')+'</span>';
+            }
+            if(r.fdv&&r.mcap)sup+=' <span style="color:var(--muted)">· FDV '+fmcap(r.fdv)+'</span>';
+            x.push('<dt>Cung lưu hành / tối đa</dt><dd>'+(r.circ?f(r.circ):'?')+' / '+(r.maxs?f(r.maxs):'?')+sup+'</dd>');
+          }
+          return x.join('');})()+
+      '</dl>'+
+    '</div></div></article>';
+}
+
+/* ═══ RENDER ═══ */
+let rows=[],vis=[],bench=0,lastTs=0,missing=[],CACHE_USED=false;
+let sortKey='stage',sortAsc=true,filterStage='',filterBkt='',filterSec='',liqMin=1e6;
+
+/* ═══ PRO: macro chips ═══ */
+function renderMacro(){
+  const chips=[];
+  if(FNG&&FNG[0]){
+    const v=+FNG[0].value,cls=FNG[0].value_classification;
+    const col=v<=25?'var(--s4)':v<=45?'var(--s3)':v>=75?'var(--s2)':'var(--muted)';
+    const tr=FNG.length>1?v-(+FNG[1].value):0;
+    chips.push('<span class="mchip" title="Fear & Greed toàn thị trường (alternative.me) — thang 0–100, 8 ngày gần nhất: '+FNG.map(x=>x.value).join(' ')+
+      '"><span class="mdot" style="background:'+col+'"></span>Fear&Greed <b>'+v+'</b> <small>'+cls+(tr?(tr>0?' ▲':'▼')+Math.abs(tr):'')+'</small></span>');
+  }
+  const fr=rows.map(r=>r.fund).filter(x=>x!=null);
+  if(fr.length){
+    const med=fr.slice().sort((a,b)=>a-b)[fr.length>>1];
+    const hot=fr.filter(x=>x>=0.05).length;
+    const col=med>0.05?'var(--s4)':med<-0.02?'var(--s2)':'var(--muted)';
+    chips.push('<span class="mchip" title="Funding rate 8h sàn Binance Futures — trung vị '+fr.length+' coin có hợp đồng; '+hot+' coin funding ≥0.05% (long đông đặc)"><span class="mdot" style="background:'+col+'"></span>Funding TB <b>'+(med>0?'+':'')+med.toFixed(3)+'%</b> <small>/8h · '+hot+' nóng</small></span>');
+  }
+  if(FLOW&&FLOW.maj&&FLOW.maj.share){
+    const dm=FLOW.maj.share-FLOW.maj.prior;
+    chips.push('<span class="mchip" title="Thị phần khối lượng của BTC+ETH trong toàn danh mục — giảm = tiền lan alt (risk-on), tăng = tiền co cụm về major (risk-off)"><span class="mdot" style="background:'+(dm<=-1.5?'var(--s2)':dm>=1.5?'var(--s4)':'var(--muted)')+'"></span>BTC+ETH <b>'+FLOW.maj.share.toFixed(0)+'%</b> <small>vol · '+(dm>0?'+':'')+dm.toFixed(1)+'pp/30d</small></span>');
+  }
+  $('macro').innerHTML=chips.join('');
+}
+
+/* ═══ PRO: breadth tiles ═══ */
+function renderBreadth(){
+  const R=rows,N=R.length||1;
+  const s2=R.filter(r=>r.stage===2).length,pct2=s2/N*100;
+  const nh=R.filter(r=>r.nh40).length,nl=R.filter(r=>r.nl40).length;
+  const ud=R.map(r=>r.udVol).filter(x=>x!=null).sort((a,b)=>a-b);
+  const udMed=ud.length?ud[ud.length>>1]:null;
+  const thrust=nh>=20&&nl>0&&nh>=3*nl;
+  const diverge=(!thrust)&&nh>=8&&nl>=8&&(nh/Math.max(nl,1))<1.5;
+  const col2=pct2>=45?'var(--s2)':pct2>=25?'var(--s1)':'var(--s4)';
+  const tiles=[];
+  tiles.push('<div class="tile'+(pct2>=45?' hot':pct2<20?' cold':'')+'"><div class="tl">% coin Pha 2</div>'+
+    '<div class="tv" style="color:'+col2+'">'+pct2.toFixed(0)+'%</div>'+
+    '<div class="ts">'+s2+' / '+N+' coin đang sóng đẩy</div>'+
+    '<div class="pbar"><i style="width:'+pct2.toFixed(1)+'%;background:'+col2+'"></i></div></div>');
+  tiles.push('<div class="tile"><div class="tl">Phá đỉnh 40 ngày hôm nay</div>'+
+    '<div class="tv" style="color:var(--s2)">'+nh+'</div><div class="ts">đóng cửa vượt đỉnh 40 ngày trước</div></div>');
+  tiles.push('<div class="tile"><div class="tl">Phá đáy 40 ngày hôm nay</div>'+
+    '<div class="tv" style="color:var(--s4)">'+nl+'</div><div class="ts">đóng cửa thủng đáy 40 ngày trước</div></div>');
+  tiles.push('<div class="tile'+(thrust?' hot':diverge?' cold':'')+'"><div class="tl">Cân phá đỉnh / đáy</div>'+
+    '<div class="tv">'+(nl?(nh/nl).toFixed(1):nh>0?'∞':'0')+'×</div>'+
+    '<div class="ts">'+(thrust?'<span class="badge thrust">⚡ BREADTH THRUST — nền mua tốt</span>':
+      diverge?'<span class="badge diverge">⚠ Cân bằng — đỉnh/đáy gần đôi</span>':
+      'NH/NL ≥3× và ≥20 đỉnh = thrust')+'</div></div>');
+  tiles.push('<div class="tile"><div class="tl">Up/Down Vol trung vị</div>'+
+    '<div class="tv '+(udMed>1.15?'ud-hi':udMed<0.87?'ud-lo':'')+'">'+(udMed?udMed.toFixed(2)+'×':'–')+'</div>'+
+    '<div class="ts">tiền vào/ra 20 ngày, toàn danh mục</div></div>');
+  const snaps=loadSnaps();
+  tiles.push('<div class="tile" style="grid-column:span 2"><div class="tl">Đường Pha 2 — '+snaps.length+' phiên gần nhất</div>'+
+    sparkline(snaps.map(s=>s.s2))+'<div class="ts">'+(snaps.length>1?'số coin Pha 2 theo từng ngày bạn mở trang':'mở trang vài ngày để tích luỹ chuỗi')+'</div></div>');
+  $('breadthTiles').innerHTML=tiles.join('');
+  saveSnap(s2,nh,nl);
+}
+function sparkline(vals){
+  if(vals.length<2)return '<div class="ts" style="padding:14px 0;color:var(--muted)">chưa đủ dữ liệu vẽ đường</div>';
+  const W=260,H=40,mn=Math.min.apply(null,vals),mx=Math.max.apply(null,vals),rg=(mx-mn)||1;
+  const X=i=>2+(W-4)*(i/(vals.length-1)),Y=v=>H-2-(H-6)*((v-mn)/rg);
+  const d=vals.map((v,i)=>(i?'L':'M')+X(i).toFixed(1)+','+Y(v).toFixed(1)).join('');
+  const last=vals[vals.length-1],up=last>=vals[0];
+  return '<svg class="spark" viewBox="0 0 '+W+' '+H+'"><path d="'+d+'" stroke="'+(up?'var(--s2)':'var(--s4)')+'"/></svg>';
+}
+const SNAPK='wsn_snap_v1';
+function loadSnaps(){try{return JSON.parse(localStorage.getItem(SNAPK)||'[]');}catch(e){return [];}}
+function saveSnap(s2,nh,nl){try{
+  const a=loadSnaps(),d=new Date().toISOString().slice(0,10);
+  if(a.length&&a[a.length-1].d===d)a[a.length-1]={d,s2,nh,nl};else a.push({d,s2,nh,nl});
+  while(a.length>60)a.shift();
+  localStorage.setItem(SNAPK,JSON.stringify(a));}catch(e){}}
+
+/* ═══ PRO: backtest panel ═══ */
+function renderBT(){
+  if(!BT||!BT.all){$('btTiles').innerHTML='<div class="ts" style="color:var(--muted)">Đang chạy mô phỏng… (cần dữ liệu nến đầy đủ)</div>';$('btTable').innerHTML='';return;}
+  const A=BT.all,tcol=v=>v>=0?'var(--s2)':'var(--s4)';
+  $('btTiles').innerHTML='<div class="bt">'+
+    tile('Tổng lệnh khớp',A.n,'đang mở: '+BT.open+' · '+BT.coins+' coin × '+BT.days+' ngày')+
+    tile('Tỷ lệ thắng',A.win+'%',A.win>=50?'<span style="color:var(--s2)">trên 50%</span>':'<span style="color:var(--s3)">dưới 50% — lãi nhờ đuôi phải</span>',A.win>=50?'hot':'')+
+    tile('Lãi TB / lệnh',(A.avg>0?'+':'')+A.avg+'%','trung vị '+(A.med>0?'+':'')+A.med+'%',A.avg>0?'hot':'cold')+
+    (BT.bh==null?'':
+    tile('Nắm giữ cùng kỳ',(BT.bh>0?'+':'')+BT.bh+'%','trung vị buy&hold toàn coin cùng cửa sổ — chiến thuật '+(A.avg>BT.bh?'<b>THẮNG</b> nắm giữ':'<b>thua</b> nắm giữ'),A.avg>BT.bh?'hot':'cold'))+
+    tile('Profit factor',A.pf+'×','tổng lãi / tổng lỗ',A.pf>=1.5?'hot':A.pf<1?'cold':'')+
+    tile('Giữ TB',A.hold+' ngày','lãi nhất +'+A.best+'% · lỗ nhất '+A.worst+'%')+'</div>';
+  const row=(lab,t)=>t?'<tr><td>'+lab+'</td><td>'+t.n+'</td><td>'+t.win+'%</td><td class="'+sg(t.avg)+'">'+(t.avg>0?'+':'')+t.avg+'%</td><td>'+t.pf+'×</td><td>'+t.hold+'d</td></tr>':'';
+  $('btTable').innerHTML='<table class="big" style="font-size:12px"><thead><tr><th class="l">Lối vào</th><th>Lệnh</th><th>Thắng</th><th>Lãi TB</th><th>PF</th><th>Giữ</th></tr></thead><tbody>'+
+    row('Toàn bộ (vào Pha 2)',BT.all)+row('Từ Pha 1 → 2 (điểm mua đẹp nhất)',BT.f1)+row('Từ Pha 3 → 2 (hồi sau phân phối)',BT.f3)+'</tbody></table>'+
+    '<div class="ts" style="margin-top:8px;color:var(--muted)">Mô phỏng đóng nến ngày, chưa tính phí/slippage. Chỉ mang tính tham khảo trên '+BT.days+' ngày gần nhất.</div>';
+}
+function tile(l,v,s,cls){return '<div class="tile'+(cls?' '+cls:'')+'"><div class="tl">'+l+'</div><div class="tv">'+v+'</div><div class="ts">'+(s||'')+'</div></div>';}
+
+/* Deep-dive 6 coin chủ chốt dạng slide: dãy thẻ có số thứ tự, bấm/◀▶ để chuyển */
+let ddIdx=0;
+function renderDeepDive(){
+  const list=MAJORS.map(t=>rows.find(r=>r.tk===t));
+  if(ddIdx>=list.length)ddIdx=0;
+  const tabs=list.map((r,i)=>'<button class="ddtab'+(i===ddIdx?' on':'')+'" data-ddi="'+i+'" data-v="'+(r?r.tk:MAJORS[i])+'" style="--sc:var('+(r?SVAR[r.stage]:'--line')+')">'+
+    '<span class="no">'+(i+1)+'</span>'+(r?r.tk:MAJORS[i])+'<span class="dot"></span><span class="stg">Pha '+(r?r.stage:'–')+'</span></button>').join('');
+  $('deepDive').innerHTML='<div class="ddtabs">'+tabs+
+    '<span class="ddnav"><button data-ddnav="-1" title="Trước">◀</button><b>'+(ddIdx+1)+' / '+list.length+'</b><button data-ddnav="1" title="Tiếp">▶</button></span></div>'+
+    ddCard(list[ddIdx]);
+}
+
+/* ═══ PRO: máy chấm "nên quan sát gì hôm nay" ═══
+   Hai danh mục tự sinh từ chỉ số đã tính trên nến thật — không cảm tính:
+   • SĂN BÙNG NỔ: coin Pha 1/2 còn cách đỉnh nền ≤6%, nền dài & gọn, U/D vol dương,
+     MA dài hết dốc xuống, RS khỏe; phạt nếu đã căng quá +40% so MA30 (đu đỉnh).
+   • CẢNH BÁO XẢ: vừa rời Pha 2 / nằm dưới MA ngắn nhiều ngày / căng >40% trên MA30 /
+     đã tăng gấp rưỡi trở lên từ đáy / ngày giảm nặng vol / funding đông long / cờ rủi ro.
+   Chỉ chấm coin vol24 ≥ $10M để tránh hàng mỏng dễ bị đẩy giá. */
+function picks(){
+  const R=rows.filter(r=>(r.vol24||0)>=1e7&&r.pnlDay!=null);
+  const buy=[],sell=[];
+  for(const r of R){
+    if(r.stage===1||r.stage===2){
+      let bs=0;const why=[];
+      const prox=r.dinhNen;
+      if(prox>-6){bs+=Math.max(0,(prox+6)/6)*2.2;
+        why.push(prox>=0?'vừa đóng trên đỉnh 40 ngày':'còn '+Math.abs(prox).toFixed(1)+'% tới đỉnh nền 40 ngày');}
+      if(r.nenW>=60&&r.nenD!=null){bs+=Math.min(1.5,r.nenW/160)+(r.nenD<30?0.7:r.nenD<45?0.3:0);
+        why.push('nền '+Math.round(r.nenW/7)+' tuần·sâu '+r.nenD.toFixed(0)+'%');}
+      if(r.udVol>1.1){bs+=Math.min(1.5,(r.udVol-1)*1.5);why.push('U/D vol '+r.udVol.toFixed(2)+'× (tiền vào thật)');}
+      if(r.slope150>-0.5){bs+=r.slope150>1?1:0.5;why.push('MA150 dốc '+(r.slope150>0?'+':'')+r.slope150.toFixed(1)+'%');}
+      if(r.rs>3){bs+=Math.min(1,r.rs/15);why.push('RS +'+r.rs.toFixed(0)+'% so danh mục');}
+      if(r.bI>=0&&r.bAge<=25&&r.bVol>=1.5){bs+=1;why.push('mới vỡ nền '+r.bAge+' ngày, vol '+r.bVol.toFixed(1)+'×');}
+      if(r.stageW===2){bs+=0.5;why.push('khung tuần đồng thuận Pha 2');}
+      if(r.vsNgan>40)bs-=(r.vsNgan-40)/20;
+      if(why.length>=2&&bs>2)buy.push({r,bs,why});
+    }
+    let cs=0;const cw=[];
+    if(r.raw===2&&r.stage===3){cs+=2.5;cw.push('HÔM NAY vừa rời Pha 2');}
+    else if(r.ra===2&&r.tnRa<=5){cs+=2;cw.push('mới rời Pha 2 '+r.tnRa+' ngày trước');}
+    if(r.stage===3&&r.below30>=3){cs+=1;cw.push('dưới MA ngắn '+r.below30+' ngày');}
+    if(r.vsNgan>40){cs+=Math.min(2,(r.vsNgan-40)/40+1);cw.push('căng +'+r.vsNgan.toFixed(0)+'% trên MA30');}
+    if(r.pnlDay>150){cs+=Math.min(2,(r.pnlDay-150)/150+0.5);cw.push('đã +' +r.pnlDay.toFixed(0)+'% từ đáy 200 ngày');}
+    if(r.udVol<0.9){cs+=1;cw.push('U/D '+r.udVol.toFixed(2)+'× — ngày giảm nặng vol');}
+    if(r.fund!=null&&r.fund>=0.05){cs+=1;cw.push('funding +'+r.fund.toFixed(2)+'% — long đông đặc');}
+    if(r.rui>0){cs+=r.rui;cw.push('cờ rủi ro chạy xa');}
+    if(cw.length>=2&&cs>=2)sell.push({r,cs,cw});
+  }
+  buy.sort((a,b)=>b.bs-a.bs);sell.sort((a,b)=>b.cs-a.cs);
+  return {buy:buy.slice(0,7),sell:sell.slice(0,7)};
+}
+function renderPicks(){
+  const P=picks();
+  const row=(x,kind,max)=>{
+    const r=x.r,col=kind==='buy'?'var(--s2)':'var(--s4)';
+    return '<div class="prow" data-q="'+r.tk+'" title="Bấm để soi '+r.tk+' trong bảng dưới">'+
+      '<span class="ptk">'+r.tk+'</span>'+
+      '<span class="stcell" style="--sc:var('+SVAR[r.stage]+');color:var('+SVAR[r.stage]+')"><i></i>'+r.stage+'</span>'+
+      '<span class="pscore"><i style="width:'+Math.max(6,Math.round((kind==='buy'?x.bs:x.cs)/max*100))+'%;background:'+col+'"></i></span>'+
+      '<span class="pwhy">'+(kind==='buy'?x.why:x.cw).join(' · ')+'</span>'+
+      '<span class="pmeta">'+fp(r.p)+'<b class="'+sg(r.pnlDay)+'">đáy +'+(r.pnlDay||0).toFixed(0)+'%</b></span></div>';};
+  const mb=Math.max.apply(null,P.buy.map(x=>x.bs).concat([1])),ms=Math.max.apply(null,P.sell.map(x=>x.cs).concat([1]));
+  $('picks').innerHTML=
+    '<div class="pickcol"><h3>🎯 Sắp bùng nổ — canh điểm mua</h3>'+
+    (P.buy.length?P.buy.map(x=>row(x,'buy',mb)).join(''):'<div class="empty">Không có coin nào đủ tiêu chí hôm nay — thị trường đang không có nền nào ép nhò.</div>')+
+    '<div class="pnote">Điểm = khoảng cách tới đỉnh nền + chất & độ dài nền + dòng tiền U/D + độ dốc MA150 + RS. Không phải bảo đảm sẽ nổ — là danh mục đáng bỏ vào watchlist.</div></div>'+
+    '<div class="pickcol"><h3>⚠️ Đã chạy mạnh — coi chừng bị xả</h3>'+
+    (P.sell.length?P.sell.map(x=>row(x,'sell',ms)).join(''):'<div class="empty">Chưa coin nào bật đủ cờ đỏ phân phối.</div>')+
+    '<div class="pnote">Điểm = vừa rời Pha 2 + căng so MA30 + % đã tăng từ đáy + vol ngày giảm + funding đông long. Có thể chỉ là điều chỉnh — nhưng là nơi tiền nên đứng ngoài nhìn.</div></div>';
+}
+
+function render(){
+  vis=rows.filter(r=>!liqMin||(r.vol24||0)>=liqMin);
+  const counts={1:0,2:0,3:0,4:0};
+  vis.forEach(r=>counts[r.stage]=(counts[r.stage]||0)+1);
+  const total=vis.length;
+  $('meta').textContent=total+' coin hiển thị · '+rows.length+' nạp được'+(missing.length?' · bỏ qua '+missing.length:'')+
+    ' · cập nhật '+new Date(lastTs).toLocaleTimeString('vi-VN')+(CACHE_USED?' · cache':'');
+  $('src').textContent='CoinGecko Top '+TOP_N+' · nến Binance/Gate · '+new Date(lastTs).toLocaleString('vi-VN');
+  const up=counts[1]+counts[2],down=counts[3]+counts[4];
+  $('breadth').textContent='Tạo nền + sóng đẩy '+up+' · Suy yếu '+down+' · tỷ lệ '+(up/Math.max(down,1)).toFixed(2);
+  renderFlow();renderPicks();renderMacro();renderBreadth();renderBT();
+
+  const band=$('band');band.innerHTML='';
+  [1,2,3,4].forEach(s=>{
+    const b=document.createElement('button');
+    const pct=total?counts[s]/total*100:25;
+    b.style.flex='0 0 '+pct+'%';b.style.background='var('+SVAR[s]+')';
+    b.textContent=pct>7?s+' · '+counts[s]:(pct>3?String(counts[s]):'');
+    b.title='Pha '+s+' — '+SNAMES[s]+': '+counts[s]+' coin ('+pct.toFixed(1)+'%)';
+    b.className=filterStage&&filterStage!==String(s)?'dim':'';
+    b.onclick=()=>{filterStage=filterStage===String(s)?'':String(s);$('fStage').value=filterStage;render();};
+    band.appendChild(b);});
+
+  const stg=$('stages');stg.innerHTML='';
+  [1,2,3,4].forEach(s=>{
+    const sub=vis.filter(r=>r.stage===s);
+    const moi=sub.filter(r=>r.phien<=20).length;
+    const ch=sub.filter(r=>r.raw!==r.stage&&r.raw>0).length;
+    stg.insertAdjacentHTML('beforeend',
+      '<div class="st" style="--sc:var('+SVAR[s]+')"><div class="lab">Pha '+s+' · '+SNAMES[s]+'</div><div class="big">'+counts[s]+'</div><div class="sub">'+(total?(counts[s]/total*100).toFixed(1):0)+'% · <b>'+moi+'</b> mới ≤20 ngày'+(ch?' · <b>'+ch+'</b> vừa đổi pha':'')+'</div></div>');});
+
+  const buys=vis.filter(r=>r.vao>0).sort((a,b)=>(b.vao-a.vao)||((a.tn===null?99:a.tn)-(b.tn===null?99:b.tn)));
+  $('cBuy').textContent=buys.length||'';
+  $('buys').innerHTML=buys.length?buys.slice(0,30).map(r=>{
+    const lbl=r.vao===3?'VÀO PHA 2'+(r.vaoFrom?' từ '+r.vaoFrom:''):(r.vao===2?'BREAK ĐỈNH NỀN':'');
+    return '<div class="row"><span class="tk">'+r.tk+'</span><span class="chip buy'+r.vao+'">'+lbl+'</span><span class="chip arrow">T-'+(r.tn===null?'?':r.tn)+'</span>'+(r.rui===1?'<span class="chip warn">chạy xa</span>':'')+'<span class="meta"><span>đỉnh nền <b class="'+sg(r.dinhNen)+'">'+f1(r.dinhNen)+'%</b></span><span>RS <b class="'+sg(r.rs)+'">'+f2(r.rs)+'%</b></span><span>giá <b>'+fp(r.p)+'</b></span></span></div>';}).join('')
+    :'<div class="empty">Không có tín hiệu mua hôm nay.</div>';
+
+  const sells=vis.filter(r=>r.ra>0).sort((a,b)=>(b.ra-a.ra)||((a.tnRa===null?99:a.tnRa)-(b.tnRa===null?99:b.tnRa)));
+  $('cSell').textContent=sells.length||'';
+  $('sells').innerHTML=sells.length?sells.slice(0,30).map(r=>
+    '<div class="row"><span class="tk">'+r.tk+'</span><span class="chip sell'+r.ra+'">'+(r.ra===2?'BÁN — rời Pha 2':'GIẢM — mất MA ngắn')+'</span><span class="chip arrow">'+(r.ra===2?'T-'+(r.tnRa===null?'?':r.tnRa):(r.tnRa===null?'?':r.tnRa)+' ngày')+'</span><span class="meta"><span>Pha <b>'+r.stage+'</b></span><span>RS <b class="'+sg(r.rs)+'">'+f2(r.rs)+'%</b></span><span>MA ngắn <b class="'+sg(r.vsNgan)+'">'+f1(r.vsNgan)+'%</b></span></span></div>').join('')
+    :'<div class="empty">Không có tín hiệu ra hôm nay.</div>';
+
+  const sh=vis.filter(r=>r.raw!==r.stage&&r.raw>0).sort((a,b)=>(a.stage-b.stage)||(a.raw-b.raw));
+  $('cShift').textContent=sh.length||'';
+  $('shifts').innerHTML=sh.length?sh.slice(0,30).map(r=>{
+    const good=(r.stage===2&&r.raw!==2)||(r.stage===1&&r.raw>=3);
+    return '<div class="row"><span class="tk">'+r.tk+'</span><span class="chip arrow">Pha '+r.raw+' → '+r.stage+'</span><span style="font-size:12px;color:var('+(good?'--s2':'--s4')+')">'+(good?'tốt lên':'xấu đi')+'</span><span class="meta"><span>MA dài <b class="'+sg(r.vsDai)+'">'+f1(r.vsDai)+'%</b></span><span>độ dốc <b class="'+sg(r.slope150)+'">'+f2(r.slope150)+'%</b></span><span>RS <b class="'+sg(r.rs)+'">'+f2(r.rs)+'%</b></span></span></div>';}).join('')
+    :'<div class="empty">Không coin nào vừa đổi pha hôm nay.</div>';
+
+  const wl=vis.filter(r=>r.stage===1).map(r=>({r:r,rd:readiness(r)}))
+    .sort((a,b)=>(b.rd.n-a.rd.n)||((b.r.rs===null?-99:b.r.rs)-(a.r.rs===null?-99:a.r.rs))).slice(0,8);
+  $('cWatch').textContent=wl.length?'8 coin dẫn đầu':'';
+  $('watch').innerHTML=wl.length?wl.map(o=>
+    '<div class="card"><div class="r1"><span class="tk">'+o.r.tk+'</span><span class="chip arrow">'+o.rd.n+'/4</span><span class="px">'+fp(o.r.p)+'</span></div><div class="dots">'+[0,1,2,3].map(i=>'<span class="dot'+(i<o.rd.n?' on':'')+'"></span>').join('')+'</div><div class="cond2">'+(o.rd.n===4?'Đủ điều kiện, chờ xác nhận':'Còn thiếu: '+o.rd.miss.join(', '))+'<br>độ dốc <b class="'+sg(o.r.slope150)+'">'+f2(o.r.slope150)+'%</b> · RS <b class="'+sg(o.r.rs)+'">'+f2(o.r.rs)+'%</b> · đỉnh nền <b class="'+sg(o.r.dinhNen)+'">'+f1(o.r.dinhNen)+'%</b></div></div>').join('')
+    :'<div class="empty">Không coin nào ở Pha 1.</div>';
+
+  renderDeepDive();
+  renderSec();
+  renderTable();
+}
+
+function renderSec(){
+  const m={};
+  vis.forEach(r=>{m[r.bkt]=m[r.bkt]||{1:0,2:0,3:0,4:0,t:0};m[r.bkt][r.stage]++;m[r.bkt].t++;});
+  const order=BKTS.filter(s=>m[s]&&m[s].t);
+  const body=order.map(s=>{
+    const o=m[s],w=x=>(o.t?o[x]/o.t*100:0).toFixed(2);
+    return '<tr><td class="l">'+s+'</td><td>'+o.t+'</td>'+
+      [1,2,3,4].map(k=>'<td style="color:var('+SVAR[k]+')">'+o[k]+'</td>').join('')+
+      '<td class="l" style="width:150px"><span class="sbar" role="img" aria-label="Pha 1 '+o[1]+', pha 2 '+o[2]+', pha 3 '+o[3]+', pha 4 '+o[4]+'">'+
+      [1,2,3,4].map(k=>'<i style="width:'+w(k)+'%;background:var('+SVAR[k]+')"></i>').join('')+
+      '</span></td></tr>';}).join('');
+  $('secTab').innerHTML='<table class="santab"><thead><tr><th class="l">Hạng vốn hoá</th><th>Coin</th><th>Pha 1</th><th>Pha 2</th><th>Pha 3</th><th>Pha 4</th><th class="l">Tỷ trọng</th></tr></thead><tbody>'+body+'</tbody></table>';
+}
+
+const COLS=[{k:'rank',t:'#'},{k:'tk',t:'Mã',l:1},{k:'sector',t:'Nhóm',l:1},{k:'stage',t:'Pha'},{k:'stageW',t:'Tuần'},{k:'raw',t:'Thô'},{k:'gia',t:'Giá',f:fp},
+  {k:'mcap',t:'MCap',f:fmcap},{k:'supPct',t:'Cung%',f:f1},{k:'vol24',t:'Vol24',f:fmcap},{k:'fund',t:'Funding'},{k:'ex',t:'Nguồn'},
+  {k:'phien',t:'Ngày'},
+  {k:'dinhNen',t:'% đỉnh nền',f:f1,c:1},{k:'vsDai',t:'% MA dài',f:f1,c:1},
+  {k:'vsNgan',t:'% MA ngắn',f:f1,c:1},{k:'below30',t:'Dưới MA ngắn'},
+  {k:'slope150',t:'Độ dốc MA dài',f:f2,c:1},{k:'rs',t:'RS',f:f2,c:1},{k:'rsB',t:'RS/BTC',f:f2,c:1},
+  {k:'d52',t:'% đỉnh 1 năm',f:f1,c:1},{k:'pnlDay',t:'PnL từ đáy',f:f1,c:1},
+  {k:'pnlB',t:'PnL bùng nổ',f:f1,c:1},{k:'bAge',t:'Giữ vỡ nền'},{k:'nen',t:'Nền·Sâu'},
+  {k:'udVol',t:'U/D Vol'},{k:'n5',t:'Nhịp 5n'},{k:'bVol',t:'Vol bùng nổ×',f:f2},{k:'volR',t:'Vol/TB20',f:f2},
+  {k:'stop',t:'Stop gợi ý'},{k:'rui',t:'Rủi ro'},{k:'sig',t:'Tín hiệu',l:1}];
+
+function renderTable(){
+  const q=$('q').value.trim().toUpperCase();
+  const fs=$('fSig').value;
+  let d=vis.filter(r=>{
+    if(filterStage&&String(r.stage)!==filterStage)return false;
+    if(filterBkt&&r.bkt!==filterBkt)return false;
+    if(filterSec&&(r.sector||'Khác')!==filterSec)return false;
+    if(q&&r.tk.indexOf(q)<0&&r.name.toUpperCase().indexOf(q)<0)return false;
+    if(fs==='buy'&&!(r.vao>0))return false;
+    if(fs==='sell'&&!(r.ra>0))return false;
+    if(fs==='shift'&&!(r.raw!==r.stage&&r.raw>0))return false;
+    if(fs==='risk'&&!(r.rui>0))return false;
+    return true;});
+  /* tín hiệu mới nhất = điểm cao nhất (T0 > T-5 > …), coin không tín hiệu = 0 → cuối */
+  const sigAge=r=>{const t=[];if(r.vao>0)t.push(r.tn===0?0:r.tn);if(r.ra>0)t.push(r.tnRa===0?0:r.tnRa);
+    return t.length?100-Math.min.apply(null,t):0;};
+  d.sort((a,b)=>{let x=sortKey==='sig'?sigAge(a):a[sortKey],y=sortKey==='sig'?sigAge(b):b[sortKey];
+    if(typeof x==='string')return sortAsc?x.localeCompare(y):y.localeCompare(x);
+    x=x===null||x===undefined?-1e9:x;y=y===null||y===undefined?-1e9:y;return sortAsc?x-y:y-x;});
+  document.querySelector('#tbl thead').innerHTML='<tr>'+COLS.map(c=>
+    '<th class="'+(c.l?'l':'')+(sortKey===c.k?' sorted'+(sortAsc?' asc':''):'')+'" data-k="'+c.k+'">'+c.t+'</th>').join('')+'</tr>';
+  document.querySelectorAll('#tbl th').forEach(el=>el.onclick=()=>{
+    const k=el.dataset.k;if(sortKey===k)sortAsc=!sortAsc;else{sortKey=k;sortAsc=(k==='tk');}
+    renderTable();});
+  document.querySelector('#tbl tbody').innerHTML=d.map(r=>'<tr>'+COLS.map(c=>{
+    if(c.k==='tk')return '<td class="l" style="font-weight:600" title="'+r.name+'">'+r.tk+'</td>';
+    if(c.k==='sector')return '<td class="l" style="color:'+(r.sector?'var(--ink-2)':'var(--muted)')+';font-size:11.5px">'+(r.sector||'Khác')+'</td>';
+    if(c.k==='ex')return '<td style="color:var(--muted)">'+({binance:'B',gate:'G',kucoin:'K',mexc:'M',okx:'O',bybit:'Y',coingecko:'C'}[r.ex]||'?')+'</td>';
+    if(c.k==='stage'){const g=r.stage===2&&r.stageW===2;
+      return '<td class="l"><span class="stcell'+(g?' glow2':'')+'" style="--sc:var('+SVAR[r.stage]+');color:var('+SVAR[r.stage]+')"><i></i>'+r.stage+'</span></td>';}
+    if(c.k==='stageW')return '<td title="Pha trên nến TUẦN (MA30 tuần ≈ 210 ngày) — khớp với pha ngày là bền hơn" style="'+(r.stageW?'color:var('+SVAR[r.stageW]+');font-weight:600':'color:var(--muted)')+'">'+(r.stageW||'–')+'</td>';
+    if(c.k==='supPct'){const v=r.supPct;return '<td'+(v!=null&&v<30?' class="sup-lo" title="Dưới 30% cung lưu hành — rủi ro unlock/tokenomics mỏng"':' title="% cung đang lưu hành so với max/FDV"')+'>'+(v==null?'–':v.toFixed(0)+'%')+'</td>';}
+    if(c.k==='fund'){if(r.fund==null)return '<td style="color:var(--muted)">–</td>';
+      return '<td class="'+(r.fund>=0.05?'fund-hi':r.fund<=-0.02?'fund-lo':'')+'" title="Funding 8h Binance Futures">'+(r.fund>0?'+':'')+r.fund.toFixed(3)+'%</td>';}
+    if(c.k==='rsB'){if(r.rsB==null)return '<td>–</td>';
+      return '<td class="'+sg(r.rsB)+'" title="Độ dốc đường coin/BTC, 20 ngày">'+f2(r.rsB)+(r.rsTop?' <span class="rstop" title="RS-line đang ở đỉnh 90 ngày — leader mạnh">⚡</span>':'')+'</td>';}
+    if(c.k==='nen'){if(!r.nenW||r.nenD==null)return '<td>–</td>';
+      return '<td title="Độ rộng × độ sâu vùng nền trước nhịp hiện tại ('+r.nenW+' ngày)">'+Math.round(r.nenW/7)+'w·'+r.nenD.toFixed(0)+'%</td>';}
+    if(c.k==='udVol'){if(r.udVol==null)return '<td>–</td>';
+      return '<td class="'+(r.udVol>1.3?'ud-hi':r.udVol<0.7?'ud-lo':'')+'" title="Tổng vol ngày tăng / ngày giảm, 20 ngày — trên 1.3 là tiền vào thật">'+r.udVol.toFixed(2)+'×</td>';}
+    if(c.k==='stop'){if(r.stop==null)return '<td>–</td>';
+      return '<td title="max(MA30, giá − 2×ATR14) · ATR = '+r.atrP.toFixed(1)+'%/ngày">'+fp(r.stop)+' <span style="color:var(--muted)">('+r.stopPct.toFixed(1)+'%)</span></td>';}
+    if(c.k==='raw')return '<td style="'+(r.raw!==r.stage&&r.raw>0?'color:var('+SVAR[r.raw]+');font-weight:600':'color:var(--muted)')+'">'+(r.raw||'–')+'</td>';
+    if(c.k==='n5'){if(r.ret5==null)return '<td>–</td>';
+      return '<td title="5 ngày gần nhất: % giá + vol 5 ngày / vol 20 ngày — cửa sổ 20 ngày chậm với cú bật đầu tiên, cột này không bỏ lỡ">'+(r.flash?'<b class="flash5">⚡</b>':'')+(r.ret5>0?'+':'')+r.ret5.toFixed(1)+'% <span style="color:var(--muted)">'+(r.v5r==null?'':r.v5r.toFixed(2)+'×')+'</span></td>';}
+    if(c.k==='sig'){
+      const p=[];
+      if(r.vao>0)p.push('<span class="sig buy" title="'+(r.vao===2?'Vỡ đỉnh nền khi đang Pha 2':r.vaoFrom===1?'Vào Pha 2 từ nền Pha 1 — điểm mua kinh điển Weinstein':'Vào lại Pha 2 sau phân phối')+'">'+(r.vao===2?'BREAK':'BUY')+' '+(r.tn===0?'T0':'T-'+r.tn)+'</span>');
+      if(r.ra>0)p.push('<span class="sig sell" title="'+(r.ra===2?'Rời Pha 2 — bán theo Weinstein':'Mất MA ngắn — giảm vị thế')+'">SELL '+(r.tnRa===0?'T0':'T-'+r.tnRa)+'</span>');
+      return '<td class="l">'+(p.join(' ')||'<span style="color:var(--muted)">·</span>')+'</td>';}
+    if(c.k==='rui')return '<td>'+(r.rui?'<span class="chip warn">'+r.rui+'</span>':'–')+'</td>';
+    if(c.k==='bAge')return '<td title="'+(r.bI>=0?'Bùng nổ '+r.bD+' @ '+fp(r.bPx):'chưa có đợt vỡ nền nào giữ được tới nay')+'">'+(r.bI>=0?r.bAge+'d':'–')+'</td>';
+    const v=r[c.k];
+    return '<td class="'+(c.c?sg(v):'')+'">'+(v===null||v===undefined?'–':(c.f?c.f(v):(Number.isInteger(v)?v:f1(v))))+'</td>';
+  }).join('')+'</tr>').join('');
+  $('cRows').textContent=d.length+' / '+vis.length+' coin';
+}
+
+/* ═══ NẠP DỮ LIỆU ═══ */
+/* RS vs BTC: đường coin/BTC 90 ngày — dốc 20 ngày + cờ "RS đang ở đỉnh 90 ngày" */
+function attachRS(rows){
+  const br=rows.find(r=>r.tk==='BTC'&&r.c);
+  for(const r of rows){
+    if(!br||r.tk==='BTC'){r.rsB=r.tk==='BTC'?0:null;r.rsTop=false;continue;}
+    const c=r.c,n=r.n;if(!c||n<22){r.rsB=null;r.rsTop=false;continue;}
+    const bc=br.c,off=bc.length-n;
+    const val=i=>c[i]/bc[off+i];
+    r.rsB=(val(n-1)/val(n-21)-1)*100;
+    let mx=-Infinity;for(let i=Math.max(1,n-90);i<n;i++){const x=val(i);if(x>mx)mx=x;}
+    r.rsTop=val(n-1)>=mx*0.999;
+  }
+}
+/* Backtest toàn danh mục: mua khi vào Pha 2, thoát bằng trailing stop —
+   đóng cửa dưới max(MA150, đỉnh sau khi mua × 0.75). MA30 quá nhạy với nhiễu crypto
+   (whipsaw lỗ giả), MA150 đơn thuần thì thả lỗ chạy sâu; trailing 25% là cân bằng thực tế. */
+function runBacktest(rows){
+  const tr=[];
+  for(const r of rows){
+    const c=r.c,n=r.n;if(!c||n<230)continue;
+    const sg=new Array(n).fill(0),m150=new Array(n).fill(0);
+    for(let i=170;i<n;i++){sg[i]=stageAt(c,i);m150[i]=maOf(c,i,150);}
+    let inP=-1,peak=0;
+    for(let i=211;i<n;i++){
+      if(inP<0){if(sg[i]===2&&sg[i-1]!==2&&sg[i-1]>0){inP=i;peak=c[i];}}
+      else{
+        if(c[i]>peak)peak=c[i];
+        const stop=Math.max(m150[i],peak*0.75);
+        if(c[i]<stop||sg[i]===4){tr.push({ret:(c[i]/c[inP]-1)*100,d:i-inP,from:sg[inP-1]});inP=-1;}
+      }
+    }
+    if(inP>=0)tr.push({ret:(c[n-1]/c[inP]-1)*100,d:n-1-inP,from:sg[inP-1],open:true});
+  }
+  const cl=tr.filter(t=>!t.open);
+  const agg=a=>{if(!a.length)return null;
+    const w=a.filter(t=>t.ret>0),gw=w.reduce((s,t)=>s+t.ret,0),
+      gl=Math.abs(a.filter(t=>t.ret<=0).reduce((s,t)=>s+t.ret,0));
+    const rs=a.map(t=>t.ret).sort((x,y)=>x-y);
+    return {n:a.length,win:+(w.length/a.length*100).toFixed(1),avg:+(a.reduce((s,t)=>s+t.ret,0)/a.length).toFixed(2),
+      med:+rs[rs.length>>1].toFixed(2),pf:gl?+(gw/gl).toFixed(2):(gw>0?99:0),
+      hold:+(a.reduce((s,t)=>s+t.d,0)/a.length).toFixed(0),best:+rs[rs.length-1].toFixed(1),worst:+rs[0].toFixed(1)};};
+  return {all:agg(cl),f1:agg(cl.filter(t=>t.from===1)),f3:agg(cl.filter(t=>t.from===3)),
+    open:tr.filter(t=>t.open).length,coins:rows.filter(r=>r.c&&r.c.length>=230).length,days:400,
+    bh:(function(){const b=rows.filter(r=>r.c&&r.c.length>=230).map(r=>(r.c[r.c.length-1]/r.c[210]-1)*100).sort((x,y)=>x-y);
+      return b.length?+b[b.length>>1].toFixed(1):null;})()};
+}
+/* ═══ PRO: dòng tiền theo nhóm ═══
+   Nguốn: vol USD ngày = vol nền × giá đóng (từ nến có sẵn). So share 20 ngày NÀY
+   với share 20 ngày CÁCH ĐÂY 30 ngày → tiền đang chảy vào/rút khỏi nhóm nào. */
+let FLOW=null,SEC_POP=false;
+function flowStats(rows){
+  const g={};let TV20=0,TVP=0;
+  for(const r of rows){
+    if(r.usdV20==null||r.usdVPrior==null||!r.usdVPrior)continue;
+    const s=r.sector||'Khác';
+    let o=g[s];if(!o)o=g[s]={n:0,v7:0,v20:0,vp:0,s2:0,s4:0,watch:0,rsSum:0,rsN:0,mc:0,fdv:0};
+    o.n++;o.v7+=r.usdV7||0;o.v20+=r.usdV20;o.vp+=r.usdVPrior;
+    if(r.stage===2)o.s2++;if(r.stage===4)o.s4++;
+    if(r.stage===1&&r.slope150>-0.5)o.watch++;
+    if(r.rs!=null){o.rsSum+=r.rs;o.rsN++;}
+    o.mc+=r.mcap||0;if(r.fdv)o.fdv+=r.fdv;
+    TV20+=r.usdV20;TVP+=r.usdVPrior;
+  }
+  const out=[];
+  for(const k in g){const o=g[k];
+    if(o.n<3)continue;
+    const share=o.v20/TV20*100,shareP=o.vp/TVP*100;
+    out.push({name:k,n:o.n,share,shareP,d:share-shareP,rel:shareP>0?(share/shareP-1)*100:0,
+      fresh:o.v20>0&&o.v7>0?o.v7/o.v20:1,s2pct:o.s2/o.n*100,s4pct:o.s4/o.n*100,
+      rs:o.rsN?o.rsSum/o.rsN:null,watch:o.watch,supPct:o.fdv>0?o.mc/o.fdv*100:null});}
+  out.sort((a,b)=>b.d-a.d);
+  const btc=rows.find(r=>r.tk==='BTC'),eth=rows.find(r=>r.tk==='ETH');
+  const mv=(btc?btc.usdV20||0:0)+(eth?eth.usdV20||0:0),mp=(btc?btc.usdVPrior||0:0)+(eth?eth.usdVPrior||0:0);
+  return {groups:out,tv20:TV20,maj:TV20?{share:mv/TV20*100,prior:mp/TVP*100}:null};
+}
+function flowStatus(x){
+  if(x.rel>=25&&x.d>=0.5)return['HÚT MẠNH','var(--s2)','hot'];
+  if(x.rel>=10&&x.d>=0.2)return['ĐANG VÀO','var(--s2)',''];
+  if(x.rel<=-25&&x.d<=-0.5)return['RÚT RA','var(--s4)','cold'];
+  if(x.rel<=-10&&x.d<=-0.2)return['ĐANG RÚT','var(--s3)',''];
+  if(x.share<3&&x.s2pct<25)return['CHƯA CÓ TIỀN','var(--muted)',''];
+  return['NẰM IM','var(--muted)',''];
+}
+function narrative(F){
+  if(!F||!F.groups.length)return[];
+  const s=[],G=F.groups.filter(x=>x.name!=='Khác'); /* "Khác" không phải ngành thật — khỏi kể trong chuyện */
+  if(!G.length)return[];
+  const top=G[0];
+  if(top.rel>=8) s.push('🔥 <b>Dòng tiền đang tập trung vào '+top.name+'</b> — chiếm '+top.share.toFixed(1)+'% vol toàn danh mục, tăng từ '+top.shareP.toFixed(1)+'% cách đây 30 ngày (<b class="pos">+'+top.rel.toFixed(0)+'%</b>), '+top.s2pct.toFixed(0)+'% coin nhóm này đang Pha 2'+(top.fresh>=1.15?' và 7 ngày gần nhất vẫn đang <b>tăng tốc</b>':'')+'.');
+  else if(top.share>=25) s.push('🧊 Nhóm lớn nhất ('+top.name+', '+top.share.toFixed(0)+'% vol) chưa nhúc nhích — tiền đang phân tán, chờ chất xúc tác.');
+  const into=G.filter(x=>x.rel>=10&&x!==top).slice(0,2);
+  if(into.length) s.push('📈 Kề theo: '+into.map(x=>'<b>'+x.name+'</b> (+'+x.rel.toFixed(0)+'% tương đối, share '+x.share.toFixed(1)+'%)').join(' · ')+'.');
+  const bot=G[G.length-1];
+  if(bot.rel<=-10) s.push('📉 <b>Tiền đang rút khỏi '+bot.name+'</b>: share còn '+bot.share.toFixed(1)+'% (<b class="neg">'+bot.rel.toFixed(0)+'%</b> so 30 ngày trước), '+bot.s4pct.toFixed(0)+'% coin nhóm này đang Pha 4 — đừng bắt dao rơi.');
+  const sleep=G.filter(x=>x.share<3&&x.s2pct<25).sort((a,b)=>b.watch-a.watch);
+  if(sleep.length&&sleep[0].watch>0) s.push('💤 <b>Chưa có dòng tiền nhưng đang thành nền</b>: '+sleep.slice(0,3).map(x=>x.name+' ('+x.watch+' coin sắp quay đầu)').join(' · ')+' — ứng viên rotation kế tiếp nếu độ rộng tiếp tục mở.');
+  if(F.maj){const dm=F.maj.share-F.maj.prior;
+    s.push(dm<=-1.5?'🐉 BTC+ETH <b>đang mất</b> thị phần tiền ('+F.maj.prior.toFixed(0)+'% → '+F.maj.share.toFixed(0)+'%): tiền lan ra alt = risk-on, ưu tiên nhóm đang vào.':
+      dm>=1.5?'🐉 Tiền <b>co cụm về BTC/ETH</b> ('+F.maj.prior.toFixed(0)+'% → '+F.maj.share.toFixed(0)+'%): risk-off — alt dễ bị bỏ đói, siết kỷ luật stop.':
+      '🐉 Thị phần BTC+ETH ổn định ('+F.maj.share.toFixed(0)+'% vol) — chưa có rotation rõ giữa major và alt.');}
+  return s;
+}
+function renderFlow(){
+  FLOW=flowStats(rows);
+  if(!SEC_POP){const secs=Array.from(new Set(rows.map(r=>r.sector).filter(Boolean))).sort();
+    if(secs.length){SEC_POP=true;const fsel=$('fSec');
+      if(fsel)fsel.innerHTML='<option value="">Mọi nhóm ngành</option>'+secs.map(s=>'<option>'+s+'</option>').join('');}}
+  const st=narrative(FLOW);
+  $('flowStory').innerHTML=(SECMAP?'':'<div class="ts" style="color:var(--s3);margin-bottom:8px">⚠ Không tải được danh mục ngành từ CoinGecko (lỗi mạng/rate-limit) — tạm gộp tất cả vào "Khác". Bấm Làm mới sau vài phút.</div>')+
+    (st.length?'<div class="story">'+st.map(x=>'<p>'+x+'</p>').join('')+'</div>':
+    '<div class="ts" style="color:var(--muted)">Chưa đủ dữ liệu nến để tính rotation (cần cả cửa sổ 50 ngày).</div>');
+  if(!FLOW.groups.length){$('flowTable').innerHTML='';return;}
+  const mx=Math.max.apply(null,FLOW.groups.map(x=>Math.abs(x.d)))||1;
+  $('flowTable').innerHTML='<div class="scroll"><table class="big flow"><thead><tr>'+
+    '<th class="l">Nhóm</th><th>Coin</th><th>Share vol 20d</th><th>Dịch chuyển 30 ngày</th><th>Nhịp 7d/20d</th><th>% Pha 2</th><th>RS trung vị</th><th>Cung lưu hành</th><th class="l">Trạng thái dòng tiền</th></tr></thead><tbody>'+
+    FLOW.groups.map(x=>{
+      const[lab,col,cls]=flowStatus(x);
+      const w=Math.min(50,Math.abs(x.d)/mx*50);
+      const bar='<span class="dv"><i style="width:'+w+'%;'+(x.d>=0?'left:50%;background:var(--s2)':'right:50%;background:var(--s4)')+'"></i><b></b></span>';
+      return '<tr class="'+cls+'" data-sec="'+x.name+'" style="cursor:pointer" title="Bấm để lọc bảng coin theo nhóm '+x.name+'"><td class="l"><b>'+x.name+'</b></td><td>'+x.n+'</td>'+
+        '<td><span class="shr"><i style="width:'+Math.min(100,x.share).toFixed(1)+'%"></i></span> '+x.share.toFixed(1)+'%</td>'+
+        '<td>'+bar+' <b class="'+sg(x.d)+'">'+(x.d>0?'+':'')+x.d.toFixed(1)+'pp</b> <span style="color:var(--muted)">('+(x.rel>0?'+':'')+x.rel.toFixed(0)+'%)</span></td>'+
+        '<td class="'+(x.fresh>=1.15?'ud-hi':x.fresh<=0.85?'ud-lo':'')+'" title="Vol 7 ngày gần / vol 20 ngày — trên 1.15 là đang nóng lên">'+x.fresh.toFixed(2)+'×</td>'+
+        '<td><span class="pbar" style="margin:0;width:56px;display:inline-block;vertical-align:middle"><i style="width:'+x.s2pct.toFixed(0)+'%;background:var(--s2)"></i></span> '+x.s2pct.toFixed(0)+'%</td>'+
+        '<td class="'+sg(x.rs)+'">'+(x.rs==null?'–':pm(x.rs)+'%')+'</td>'+
+        '<td'+(x.supPct!=null&&x.supPct<40?' class="sup-lo" title="Dưới 40% cung lưu hành — áp lực unlock lớn"':'')+'>'+(x.supPct==null?'–':x.supPct.toFixed(0)+'%')+'</td>'+
+        '<td class="l"><span class="badge" style="background:transparent;color:'+col+';border:1px solid '+col+';padding:2px 8px">'+lab+'</span></td></tr>';}).join('')+
+    '</tbody></table></div>'+
+    '<div class="ts" style="margin-top:8px;color:var(--muted)">Share vol = tỷ trọng khối lượng USD của nhóm trong toàn danh mục. "Dịch chuyển 30 ngày" = thay đổi share (điểm %) giữa 20 ngày gần nhất và 20 ngày trước đó — đây chính là hướng dòng tiền đang chảy. Coin chưa khớp được ngành vào "Khác".</div>';
+}
+/* ═══ PRO phase 2: coin nào cả 6 sàn đều không có cặp USDT (token sàn, quỹ token hóa…)
+   thì lấy nến ngày trực tiếp từ CoinGecko market_chart — chỉ giá+vol nên h=l=c (không có
+   bóng nến; ATR/top40 vẫn đúng vì tính theo close). Chạy NỀN sau khi bảng đã hiển thị.
+   Free tier CG chỉ ~6 call/phút cho endpoint này → nhịp 6.5s + cache nến 24h trong
+   localStorage (lần đầu ~10 phút nền, các lần sau ăn cache tức thì). ═══ */
+const CGCK='wsn_cgcandles_v1';
+function cgCacheLoad(){try{const o=JSON.parse(localStorage.getItem(CGCK))||{},now=Date.now();
+  for(const k in o)if(!o[k]||!o[k].c||now-o[k].ts>7*864e5)delete o[k]; /* quá 7 ngày = vứt, tránh phình localStorage */
+  return o;}catch(e){return {};}}
+let LOADGEN=0,BFDONE=true;
+async function cgBackfill(plan,data){
+  const gen=++LOADGEN;
+  /* chỉ backfill coin có thanh khoản thật ≥$10M — quỹ token hoá vol mỏng không đáng lấy
+     nến của endpoint bị limit 4-6 call/phút; xếp theo rank nên coin quan trọng về trước */
+  const miss=plan.filter(p=>!data[p.base]&&(p.vol24||0)>=1e7);
+  if(!miss.length)return;
+  BFDONE=false;
+  const cc=cgCacheLoad(),fresh=20*3600e3;
+  let added=0,i=0;
+  const rebench=()=>{bench=mean(rows.map(r=>r.ret20));rows.forEach(r=>{r.rs=r.ret20-bench;});attachRS(rows);};
+  const mkRow=(pl,c,v)=>buildCoin(pl,{c,h:c.slice(),l:c.slice(),v,ex:'coingecko'});
+  for(const pl of miss){
+    if(gen!==LOADGEN)return;
+    i++;
+    $('meta').textContent='Đang bổ sung CoinGecko '+i+'/'+miss.length+'… (+'+added+' coin)';
+    try{
+      const e=cc[pl.id];
+      if(e&&Date.now()-e.ts<fresh&&e.c&&e.c.length>=172){
+        const r=mkRow(pl,e.c,e.v);
+        if(r){rows.push(r);added++;missing=missing.filter(x=>x!==pl.base);}
+      }else{
+        let j=null;
+        try{j=await fetchJ(CG+'/coins/'+pl.id+'/market_chart?vs_currency=usd&days=365&interval=daily',3);}
+        catch(err){await sleep(12000);try{j=await fetchJ(CG+'/coins/'+pl.id+'/market_chart?vs_currency=usd&days=365&interval=daily',2);}catch(e2){}}
+        const p=j&&j.prices,tv=j&&j.total_volumes;
+        if(p&&p.length>=172){
+          const c=p.map(x=>x[1]);
+          const v=tv&&tv.length===p.length?tv.map((x,k)=>x[1]/(c[k]||1)):c.map(()=>0);
+          cc[pl.id]={ts:Date.now(),c,v};
+          try{localStorage.setItem(CGCK,JSON.stringify(cc));}catch(err){}
+          const r=mkRow(pl,c,v);
+          if(r){rows.push(r);added++;missing=missing.filter(x=>x!==pl.base);}
+        }
+        await sleep(6500);
+      }
+    }catch(err){}
+    if(gen!==LOADGEN)return;
+    if(added&&added%8===0){rebench();render();}
+  }
+  if(added){rebench();BT=runBacktest(rows);cacheSave();}
+  render();
+  if(gen===LOADGEN)BFDONE=true;
+}
+
+function computeAll(plan,data,ts,fromCache){
+  rows=[];missing=[];CACHE_USED=!!fromCache;
+  for(const pl of plan){
+    const d=data[pl.base];
+    if(!d){missing.push(pl.base);continue;}
+    const r=buildCoin(pl,d);
+    if(!r){missing.push(pl.base);continue;}
+    rows.push(r);
+  }
+  if(!rows.length){$('meta').textContent='Không dựng được coin nào từ dữ liệu tải về.';return;}
+  bench=mean(rows.map(r=>r.ret20));
+  rows.forEach(r=>{r.rs=r.ret20-bench;});
+  attachRS(rows);
+  BT=runBacktest(rows);
+  lastTs=ts;
+  cacheSave();
+  render();
+}
+function restoreCache(ca){
+  rows=ca.rows;missing=ca.missing||[];lastTs=ca.ts;CACHE_USED=true;
+  bench=mean(rows.map(r=>r.ret20));
+  rows.forEach(r=>{r.rs=r.ret20-bench;});
+  if(ca.bt)BT=ca.bt;
+  if(ca.fng&&!FNG)FNG=ca.fng;
+  render();
+}
+function showBanner(t){const b=$('banner');b.textContent=t;b.hidden=false;}
+function hideBanner(){$('banner').hidden=true;}
+
+let busy=false;
+/* 2 calls nhanh cho funding + Fear&Greed; hỏng call nào bỏ trống cột đó, không chặn pipeline */
+async function loadMacroFacts(){
+  try{const j=await fetchJ(FAPI+'/fapi/v1/premiumIndex',2);
+    FUND={};(Array.isArray(j)?j:[]).forEach(x=>{if(/USDT$/.test(x.symbol)&&x.lastFundingRate!=null)FUND[x.symbol.slice(0,-4)]=+x.lastFundingRate;});}catch(e){}
+  try{const j=await fetchJ(FNGU,2);FNG=(j&&Array.isArray(j.data)&&j.data.length)?j.data:null;}catch(e){}
+}
+async function loadAll(){
+  if(busy)return;busy=true;LOADGEN++;BFDONE=true;
+  $('refreshBtn').disabled=true;$('refreshBtn').textContent='Đang tải…';
+  try{
+    await loadMacroFacts();
+    const coins=await cgMarkets();
+    const sets=await loadPairSets();
+    const plan=assign(coins,sets);
+    const cnt=e=>plan.filter(p=>p.ex===e).length;
+    $('meta').textContent='Ghép '+plan.length+' coin (B '+cnt('binance')+' · G '+cnt('gate')+' · K '+cnt('kucoin')+' · M '+cnt('mexc')+' · O '+cnt('okx')+' · Y '+cnt('bybit')+') — đang tải nến…';
+    const [data]=await Promise.all([fetchAll(plan),cgSectors()]);
+    if(SECMAP)plan.forEach(p=>{p.sector=SECMAP[p.id]||null;});
+    computeAll(plan,data,Date.now(),false);
+    hideBanner();
+    cgBackfill(plan,data);
+  }catch(e){
+    const msg=e&&e.message?e.message:String(e);
+    const ca=cacheLoad();
+    if(ca){restoreCache(ca);
+      showBanner('Không cập nhật được ('+msg+') — đang hiển thị dữ liệu cache lúc '+new Date(ca.ts).toLocaleString('vi-VN')+'.');}
+    else showBanner('Không tải được dữ liệu: '+msg+'. Kiểm tra mạng — CoinGecko/Binance/Gate có thể bị chặn ở một số khu vực.');
+    if(!rows.length)$('meta').textContent='Chưa có dữ liệu.';
+  }finally{busy=false;$('refreshBtn').disabled=false;$('refreshBtn').textContent='Làm mới dữ liệu';}
+}
+
+$('refreshBtn').onclick=loadAll;
+$('q').oninput=renderTable;
+$('fSig').onchange=renderTable;
+$('fBkt').onchange=e=>{filterBkt=e.target.value;renderTable();};
+$('fSec').onchange=e=>{filterSec=e.target.value;renderTable();};
+$('fLiq').onchange=e=>{liqMin=+e.target.value;render();};
+$('fStage').onchange=e=>{filterStage=e.target.value;render();};
+$('themeBtn').onclick=()=>{
+  const cur=document.documentElement.getAttribute('data-theme');
+  const dark=cur?cur==='dark':matchMedia('(prefers-color-scheme:dark)').matches;
+  document.documentElement.setAttribute('data-theme',dark?'light':'dark');};
+$('exportBtn').onclick=()=>{
+  if(!vis.length)return;
+  const head=['Rank','Symbol','Name','Nganh','NhomHang','Pha','PhaTuan','PhaThoo','Gia','MCap','CungLuuHanh','CungToiDa','FDV','CungLuuHanh_pct','Vol24','VolUSD_20d_TB','Funding_8h_pct','Nguon','NgayTrongPha','PctDinhNen40','PctVsMA150','PctVsMA30','NgayDuoiMA30','DoDocMA150_20d','RS20_vs_danh_muc','RS20_vs_BTC','RS_dinh90d','PctVsDinh1Nam','PnlTuDay200d','PnlTuBungNo','NgayGiVoNen','NgayBungNo','Nen_tuan','Nen_sau_pct','UpDownVol_20d','VolBungNo_xTB20','Vol_over_TB20','ATR_pct','Stop_goi_y','Stop_pct','RuiRo','Vao','T-n','Ra','T-nRa','TinHieu','Nhip5n_pct','Vol5_vol20'];
+  const lines=[head.join(',')].concat(vis.map(r=>[r.rank,r.tk,'"'+(r.name||'').replace(/"/g,'""')+'"',r.sector||'Khác',r.bkt,r.stage,r.stageW||'',r.raw||'',r.p,
+    r.mcap||'',r.circ||'',r.maxs||'',r.fdv||'',r.supPct==null?'':r.supPct.toFixed(1),r.vol24||'',r.usdV20==null?'':Math.round(r.usdV20),r.fund==null?'':r.fund.toFixed(4),r.ex,r.phien,r.dinhNen.toFixed(2),r.vsDai.toFixed(2),r.vsNgan.toFixed(2),r.below30,
+    r.slope150.toFixed(2),r.rs.toFixed(2),r.rsB==null?'':r.rsB.toFixed(2),r.rsTop?1:0,r.d52.toFixed(2),
+    r.pnlDay===null?'':r.pnlDay.toFixed(1),r.pnlB===null?'':r.pnlB.toFixed(1),
+    r.bI>=0?r.bAge:'',r.bI>=0?r.bD:'',r.nenW?Math.round(r.nenW/7):'',r.nenD==null?'':r.nenD.toFixed(1),
+    r.udVol==null?'':r.udVol.toFixed(2),r.bVol===null?'':r.bVol.toFixed(2),
+    r.volR.toFixed(2),r.atrP==null?'':r.atrP.toFixed(1),r.stop==null?'':r.stop,r.stopPct==null?'':r.stopPct.toFixed(1),
+    r.rui,r.vao,
+    r.tn===null?'':r.tn,r.ra,r.tnRa===null?'':r.tnRa,
+    [(r.vao>0?(r.vao===2?'BREAK ':'BUY ')+(r.tn===0?'T0':'T-'+r.tn):''),(r.ra>0?'SELL '+(r.tnRa===0?'T0':'T-'+r.tnRa):'')].filter(Boolean).join(' / '),
+    r.ret5==null?'':r.ret5.toFixed(1),r.v5r==null?'':r.v5r.toFixed(2)].join(',')));
+  const blob=new Blob([lines.join('\n')],{type:'text/csv;charset=utf-8'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='weinstein-crypto-top500-'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+  setTimeout(()=>URL.revokeObjectURL(a.href),5000);
+};
+
+/* ═══ KHỞI ĐỘNG ═══ */
+$('picks').onclick=e=>{
+  const el=e.target.closest?e.target.closest('[data-q]'):null;if(!el)return;
+  const q=$('q');q.value=el.getAttribute('data-q');
+  filterSec='';const fs=$('fSec');if(fs)fs.value='';
+  renderTable();
+  const tw=document.querySelector('.tablewrap');if(tw&&tw.scrollIntoView)tw.scrollIntoView({behavior:'smooth',block:'start'});
+};
+$('deepDive').onclick=e=>{
+  const b=e.target.closest?e.target.closest('[data-ddi],[data-ddnav]'):null;if(!b)return;
+  if(b.hasAttribute('data-ddi'))ddIdx=+b.getAttribute('data-ddi');
+  else ddIdx=(ddIdx+ +b.getAttribute('data-ddnav')+MAJORS.length)%MAJORS.length;
+  renderDeepDive();
+};
+$('flowTable').onclick=e=>{
+  const tr=e.target.closest?e.target.closest('tr[data-sec]'):null;if(!tr)return;
+  const s=tr.getAttribute('data-sec');
+  filterSec=filterSec===s?'':s;
+  const sel=$('fSec');if(sel)sel.value=filterSec;
+  renderTable();
+  const tw=document.querySelector('.tablewrap');if(tw&&tw.scrollIntoView)tw.scrollIntoView({behavior:'smooth',block:'start'});
+};
+(function init(){
+  $('fBkt').innerHTML='<option value="">Mọi hạng</option>'+BKTS.map(s=>'<option>'+s+'</option>').join('');
+  const ca=cacheLoad();
+  if(ca&&Date.now()-ca.ts<FRESH)restoreCache(ca);
+  loadAll();
+  setInterval(loadAll,15*60*1000);
+})();
+</script>
+</body>
+</html>
