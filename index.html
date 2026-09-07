@@ -507,6 +507,7 @@ async function cgSectors(){
 }
 /* MỌI request có timeout — một kết nối treo (gateio/kucoin hay gặp trên mạng
    VN) không được phép chặn cả pool. Hỏng sàn này tự rơi sang sàn kế. */
+let LASTFAIL='';
 async function jfetch(url,ms){
   ms=ms||8000;
   const ctrl=new AbortController();
@@ -523,7 +524,10 @@ async function fetchJ(url,tries){
       if(r.status===429&&i<tries-1){await sleep(3000);continue;}
       if(r.status>=500&&i<tries-1){await sleep(1200);continue;}
       break; /* 4xx (cặp không tồn tại…) → fail ngay, đừng ngủ lại vô ích */
-    }catch(e){err=e;if(i<tries-1){await sleep(800);continue;}break;}
+    }catch(e){err=e;
+      if(i<tries-1){await sleep(1200+i*1800);continue;} /* lỗi mạng: chờ càng lâu thử lại càng kiên nhẫn */
+      LASTFAIL=(url||'').replace(/^https?:\/\//,'').split('/')[0];
+      break;}
   }
   throw err||new Error('không kết nối được');
 }
@@ -535,7 +539,7 @@ async function bGet(path){
     try{const r=await jfetch(BH[j]+path);
       if(r.ok){bHost=j;return await r.json();}
       err=new Error('HTTP '+r.status);}
-    catch(e){err=e;}
+    catch(e){err=e;LASTFAIL=BH[j].replace(/^https?:\/\//,'');}
   }
   throw err;
 }
@@ -1482,13 +1486,17 @@ async function loadAll(){
     cgBackfill(plan,data);
   }catch(e){
     const msg=e&&e.message?e.message:String(e);
+    const host=LASTFAIL?' (lỗi ở: '+LASTFAIL+')':'';
     const ca=cacheLoad();
     if(ca){restoreCache(ca);
-      showBanner('Không cập nhật được ('+msg+') — đang hiển thị dữ liệu cache lúc '+new Date(ca.ts).toLocaleString('vi-VN')+'.');}
-    else showBanner('Không tải được dữ liệu: '+msg+'. Kiểm tra mạng — CoinGecko/Binance/Gate có thể bị chặn ở một số khu vực.');
+      showBanner('Không cập nhật được '+host+' — đang hiển thị dữ liệu cache lúc '+new Date(ca.ts).toLocaleString('vi-VN')+'. Bấm Làm mới dữ liệu để thử lại.');}
+    else showBanner('Không tải được dữ liệu'+host+': '+msg+'. Nếu mạng nhà vẫn vào được trang khác: tắt Adblock/VPN, hoặc bấm Làm mới dữ liệu thử lại — mạng VN thi thoảng chập chờn với CoinGecko/Binance, thử lại sau 1–2 phút thường hết.');
     if(!rows.length)$('meta').textContent='Chưa có dữ liệu.';
+    /* tự thử lại 1 lần sau 25 giây khi lần đầu chưa có gì — đừng để người xem phải canh tay */
+    if(!ca&&!retried){retried=true;setTimeout(()=>{if(!rows.length&&!busy)loadAll();},25000);}
   }finally{busy=false;$('refreshBtn').disabled=false;$('refreshBtn').textContent='Làm mới dữ liệu';}
 }
+let retried=false;
 
 $('refreshBtn').onclick=loadAll;
 $('q').oninput=renderTable;
